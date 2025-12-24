@@ -367,6 +367,22 @@
   color: #fff;
 }
 
+.room-palette-item {
+  display: flex;
+  flex-direction: column; /* Stackt Name und Buttons vertikal */
+  align-items: center;    /* Zentriert alles horizontal */
+  justify-content: center; 
+  padding: 4px;
+  text-align: center;
+}
+
+.room-palette-item .tier-buttons {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px; /* Abstand unter dem Namen */
+}
+
+
 	<!--CSS -->
  
 </style>
@@ -799,17 +815,28 @@ for (const roomId in ROOM_DATA) {
   // Tier-Buttons nur für Spymaster & Sacrificial Chamber
   if (roomId === 'spymasters_study' || roomId === 'altar_of_sacrifice') {
     const tierContainer = document.createElement('div');
-    tierContainer.style.display = 'flex';
-    tierContainer.style.justifyContent = 'center';
-    tierContainer.style.marginTop = '4px';
-    tierContainer.style.gap = '4px';
+	tierContainer.classList.add('tier-buttons');
+	tierContainer.style.display = 'flex';
+	tierContainer.style.flexDirection = 'row';
+	tierContainer.style.justifyContent = 'center';
+	tierContainer.style.alignItems = 'center';
+	tierContainer.style.width = '100%';
+	tierContainer.style.marginTop = '6px';
+	tierContainer.style.gap = '6px';
+
+
 
     ['tier1','tier2','tier3'].forEach(tier => {
       const btn = document.createElement('button');
-      btn.innerText = tier.replace('tier','T');
-      btn.style.fontSize = '10px';
-      btn.style.padding = '2px 4px';
-      btn.style.cursor = 'pointer';
+      btn.innerText = tier.replace('tier',''); // nur „1“, „2“, „3“
+      btn.style.fontSize = '11px';
+	  btn.style.width = '26px';
+	  btn.style.height = '26px';
+	  btn.style.padding = '0';
+	  btn.style.lineHeight = '26px';
+	  btn.style.textAlign = 'center';
+	  btn.style.cursor = 'pointer';
+
 
 
 
