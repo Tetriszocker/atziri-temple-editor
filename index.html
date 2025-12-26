@@ -1357,9 +1357,9 @@ function placeRoom(x, y) {
       cellObj.tier = 'tier1';
       cellObj.manualTier = false;
       renderCell(cellObj);
+      highlightValidCells();
       recalcAllTiers();
       updateGeneratorRanges();
-	  markValidCellsForCurrent();
       updateEffectsSidebar();
       return;
   }
@@ -1372,10 +1372,14 @@ function placeRoom(x, y) {
   cellObj.manualTier = false;
 
   renderCell(cellObj);
-  highlightValidCells();
   recalcAllTiers();
   updateGeneratorRanges();
+  highlightValidCells();
+  markValidCellsForCurrent();
   updateEffectsSidebar();
+
+  
+  
 }
 
 
@@ -1504,6 +1508,9 @@ function isValidPlacement(cellObj) {
 
     // Alle anderen Räume: prüfen, ob Upgrade über Nachbarn möglich
     return neighborsForUpgrade(cellObj);
+	
+	
+	
 }
 
 // Hilfsfunktion: Nachbarn der Zelle abrufen
@@ -1867,6 +1874,7 @@ function updateTier(x, y) {
 
     cellObj.tier = maxTierAchieved;
     renderCell(cellObj);
+	
 }
 				// UPdatetier fertig //
 
@@ -2881,4 +2889,3 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
-
