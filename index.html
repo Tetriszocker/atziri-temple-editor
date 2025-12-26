@@ -39,25 +39,25 @@
 
 #grid {
   display: grid;
-  grid-template-columns: repeat(9, 60px);
-  grid-template-rows: repeat(9, 60px);
+  grid-template-columns: repeat(9, 50px);
+  grid-template-rows: repeat(9, 50px);
+  gap: 12px;
   transform: rotate(45deg);
   margin-top: 120px;
   margin-right: 120px;
+  
 }
 
-/* Grid-Zellen */
+/* ---------------- Grid-Zellen ---------------- */
 .cell {
-  width: 60px;
-  height: 60px;
-  background:#222;
-  border: 1px solid #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+	border: 1px solid #333;
+    align-items: center;
+	line-height: 1em;
+    position: relative;
 }
 
 .cell span {
@@ -65,25 +65,20 @@
   display: block;
 }
 
-.cell span.room-initial {
-  display: block;
-  top: 10px;
-  transform: rotate(-45deg);
-  font-size: 18px;
-  font-weight: bold;
-  color: #000;
-  
+.cell-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	color: #000;
+	font-weight: bold;
+	line-height: 1em;
+	
+	
 }
 
-.cell span.tier-number {
-  bottom: 5px;
-  right: 3px;
-  transform: translateX(-50%, -50%) rotate(-45deg); /* gegen Grid-Rotation */
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 0 0 2px #000;
-}
 
 
 /* Hover-Effekt für Grid-Zellen */
@@ -93,7 +88,6 @@
   box-shadow: 0 0 10px rgba(255,255,255,0.5); /* leichter Glow */
   transition: transform 0.1s, border-color 0.1s, box-shadow 0.1s;
 }
-
 
 .cell span { transform: rotate(-45deg); }
 
@@ -130,13 +124,13 @@
   border-radius: 8px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   text-align: center;
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
   line-height: 1.1;
-  color: black;
+  color: #fff;
   padding: 2px;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -327,7 +321,7 @@
 }
 
 .cell:hover::after {
-  opacity: 1;
+  opacity: 0;
 }
 
 #room-tooltip {
@@ -370,16 +364,177 @@
 .room-palette-item {
   display: flex;
   flex-direction: column; /* Stackt Name und Buttons vertikal */
-  align-items: center;    /* Zentriert alles horizontal */
+  align-items: flex-end;    /* Zentriert alles horizontal */
   justify-content: center; 
   padding: 4px;
   text-align: center;
+  position: relative;
 }
 
 .room-palette-item .tier-buttons {
   display: flex;
   gap: 4px;
   margin-top: 6px; /* Abstand unter dem Namen */
+}
+
+
+/* ----------------------------- */
+/* Brücken */
+.bridge {
+  position: absolute;
+  background-color: #00ff00;
+  display: none; /* standardmäßig unsichtbar */
+  z-index: 1;
+  border-radius: 2px;
+  opacity: 0;
+}
+
+/* Aktivierte Brücken */
+.bridge.active {
+  opacity: 1;
+  display: block;
+}
+
+/* Richtung Up */
+.bridge.up {
+  width: 6px;
+  height: 12px; /* halbe Gap-Höhe */
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Richtung Down */
+.bridge.down {
+  width: 6px;
+  height: 12px;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Richtung Left */
+.bridge.left {
+  width: 12px; /* halbe Gap-Breite */
+  height: 6px;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Richtung Right */
+.bridge.right {
+  width: 12px;
+  height: 6px;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mode-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 10px;
+}
+
+.mode-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #555;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* -------------------- Info Box Styling -------------------- */
+#info-box-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#toggle-info-btn {
+  background: #2b2b2b;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#toggle-info-btn:hover {
+  background: #3a3a3a;
+}
+
+#info-box {
+  background: #181818;
+  color: #eee;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  opacity: 0;
+}
+
+#info-box.expanded {
+  max-height: 300px; /* genug Platz für Inhalt */
+  opacity: 1;
+}
+
+
+.room-palette-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* ⬅ Text nach unten */
+  align-items: center;
+  position: relative;
+}
+
+.room-palette-item > div {
+  color: white;              /* ⬅ Text weiß */
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 1px;       /* ⬅ Abstand zum unteren Rand */
+  pointer-events: none;
 }
 
 
@@ -391,6 +546,17 @@
 
  <h1 id="editor-title">PoE2 Atziri's Temple Planner - Tetriszocker</h1>
  
+ <div id="mode-switch-container" style="text-align:center; margin-bottom:10px;">
+  <label class="mode-switch">
+    <input type="checkbox" id="modeToggle">
+    <span class="slider"></span>
+  </label>
+  <span id="mode-info" title="Ingame Logic active">
+    Ingame Logic used
+  </span>
+</div>
+
+ 
  <div id="editor-container">
   <!-- Grid links -->
   <div id="grid-container">
@@ -399,8 +565,26 @@
   </div>
   
 
+
   <!-- Sidebar rechts -->
   <div id="sidebar">
+  
+  <div id="info-box-container">
+  <button id="toggle-info-btn">ℹ Info</button>
+  <div id="info-box" class="collapsed">
+    <p>
+      Welcome to the Atziri Temple Planner!<br>
+      - You can switch the placement mode via the switch above the grid.<br>
+      - The ingame mode uses the ingame placement ruleset.<br>
+      - You can click a tile and it shows you where you can place it via a green box.<br>
+      - Manuel mode allows you to ignore the placement rules and just follows the ingame upgrade rules. <br>
+	  - If you cannot place anything, reset your grid so the first Path gets autoplaced. <br>
+	  - Medallion can be used on any tile to increase its Tier. This will currently brick the upgradelogic for some tiles and should only be used for your overview. <br>
+	  - First time coding something so no garantuees that this is 100% correct. If you find a bug, please use this reddit thread to post it or give your feedback. <br>
+	  - Most importantly: Have fun and stay sane exiles!<br>
+    </p>
+  </div>
+</div>
     <!-- Aktueller Raum -->
     <div id="current-room-display"></div>
 
@@ -419,13 +603,13 @@
   <div id="palette-buttons">
     <button id="reset-button">Reset Grid</button>
     <button id="save-button">💾 Save Layout</button>
-    <button id="load-button">📂 Load Layout</button>
+    
     <button id="export-button">📤 Export as URL</button>
+	
+
   </div>
 
 </div>
-
-
 
     <!-- Effekte-Anzeige -->
     <div id="effects-display">
@@ -440,8 +624,7 @@
 
 <div id="room-tooltip"></div>
 <script>
-  
-  // ------------------------------
+    // ------------------------------
 // Mapping für Anzeige der Tier-Namen in Sidebar und Tooltip
 const TIER_DISPLAY_NAME = {
   tier1: 'Tier 1',
@@ -458,11 +641,9 @@ function nextTier(tier) {
   if (n >= 7) return null; // maximale Tierstufe erreicht
   return 'tier' + (n + 1);
 }
-
 // 1️⃣ ROOM_DATA (gekürzt als Beispiel, alle 59 Räume können hier eingefügt werden)
   // ------------------------------
   const ROOM_DATA = {
-
   // -------------------------
   // 1. Path
 path: {
@@ -483,22 +664,27 @@ path: {
     name: 'Garrison',
     color: '#f28c8c',
     tooltip: 'Increased number of Monster Packs',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconGarrison.webp' ,
+	transcendentIcon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconTranscendentBarracks.webp',
+    legionIcon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconViperLegionBarracks.webp',
     variants: {
       tier1: { effects: ['10% increased number of Monster Packs'] },
       tier2: { effects: ['15% increased number of Monster Packs'] }, // Barracks
       tier3: { effects: ['20% increased number of Monster Packs'] },
-	  tier4: { effects: ['Transcendent Barracks 2 - 30% increased number of Magic Monsters'] },
-	  tier5: { effects: ['Transcendent Barracks 3 - 60% increased number of Magic Monsters'] },
-	  tier6: { effects: ['Legion Barracks 2 - 30% increased number of Rare Monsters '] },
-	  tier7: { effects: ['Legion Barracks 3 - 60% increased number of Rare Monsters '] },		 
+	  tier4: { effects: ['30% increased number of Magic Monsters'] },
+	  tier5: { effects: ['60% increased number of Magic Monsters'] },
+	  tier6: { effects: ['30% increased number of Rare Monsters '] },
+	  tier7: { effects: ['60% increased number of Rare Monsters '] },		 
     },
     upgrades: {
       tier2: { type: 'adjacent', rooms: ['commanders_chamber','armoury'], count: 1 },
-      tier3: { type: 'adjacent', rooms: ['commanders_chamber','armoury'], count: 2 },
-	  tier4: { type: 'complex', requiredAdjacent: ['synthflesh_lab'], optionalAdjacent: ['armoury','commanders_chamber'], },
-	  tier5: { type: 'adjacent', rooms: ['commanders_chamber','armoury', 'synthflesh_lab'], count: 3 },
-	  tier6: { type: 'complex', requiredAdjacent: ['spymasters_study'], optionalAdjacent: ['armoury','commanders_chamber'], },
-	  tier7: { type: 'adjacent', rooms: ['commanders_chamber','armoury', 'spymasters_study'], count: 3 },
+      tier3: { type: 'adjacent', rooms: ['commanders_chamber','armoury'], requireAll: true },
+	  
+	  tier4: { type: 'adjacent', rooms: ['synthflesh_lab'], count: 1 },
+	  tier5: { type: 'complex', requiredAdjacent: ['synthflesh_lab'], optionalAdjacent: ['armoury','commanders_chamber'], },
+	 	  
+	  tier6: { type: 'adjacent', rooms: ['spymasters_study'], count: 1 },
+	  tier7: { type: 'complex', requiredAdjacent: ['spymasters_study'], optionalAdjacent: ['armoury','commanders_chamber'], },
     }
   },
   // -------------------------
@@ -508,6 +694,7 @@ path: {
     name: "Commander",
     color: '#f5a36f',
     tooltip: 'Effectiveness of Rare monsters',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconCommander.webp' ,
     variants: {
       tier1: { effects: ['Rare Monsters have 15% increased effectiveness'] },
       tier2: { effects: ['Rare Monsters have 30% increased effectiveness'] },
@@ -525,6 +712,7 @@ path: {
     name: 'Armoury',
     color: '#f5d36f',
     tooltip: 'Effectiveness of humanoid monsters',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconArmoury.webp', 
     variants: {
       tier1: { effects: ['Humanoid Monsters have 15% increased effectiveness'] },
       tier2: { effects: ['Humanoid Monsters have 30% increased effectiveness'] },
@@ -532,7 +720,7 @@ path: {
     },
     upgrades: {
       tier2: { type: 'adjacent', rooms: ['bronzeworks', 'chamber_of_souls'], count: 1 },
-      tier3: { type: 'adjacent', rooms: ['bronzeworks', 'chamber_of_souls'], count: 2 }
+      tier3: { type: 'adjacent', rooms: ['bronzeworks', 'chamber_of_souls'], requireAll: true }
     }
   },
   // -------------------------
@@ -542,13 +730,17 @@ bronzeworks: {
     name: 'Smithy',
     color: '#fc8c6f',
     tooltip: 'Increases chest item rarity',
+	icon: ' https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconSmithy.webp',
     variants: {
       tier1: { effects: ['Chests have 15% more item rarity'] },
       tier2: { effects: ['Chests have 30% more item rarity'] },
       tier3: { effects: ['Chests have 60% more item rarity'] }
     },
-    upgrades: {},
-    upgradeInfoFunction: (cellObj) => "Requires Golem Works adjacent and Generator in range to upgrade"
+    upgrades: {
+	tier2: { type: 'adjacent', rooms: ['workshop', 'dynamo'], count: 1 },
+    tier3: { type: 'adjacent', rooms: ['workshop', 'dynamo'], count: 2 },
+	}
+
 },
 
   // -------------------------
@@ -558,6 +750,7 @@ bronzeworks: {
   name: 'Generator',
   color: '#8fcaf2',
   tooltip: 'Required for Smithy, Synth Lab, Transc Barracks and 2x for Workshop Upgrades',
+  icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconGenerator.webp', 
   providesEnergy: true,
   energyRangeByTier: {
     tier1: 3,
@@ -571,7 +764,7 @@ bronzeworks: {
   },
   upgrades: {
     tier2: { type: 'adjacent', rooms: ['thaumaturges_laboratory', 'altar_of_sacrifice'], count: 1 },
-    tier3: { type: 'adjacent', rooms: ['thaumaturges_laboratory', 'altar_of_sacrifice'], count: 2 }
+    tier3: { type: 'complex', requiredAdjacent: ['thaumaturges_laboratory', 'altar_of_sacrifice'], }
   }
 },
 
@@ -582,6 +775,7 @@ spymasters_study: {
     name: "Spymaster",
     color: '#6fcf6f',
     tooltip: 'Increases Temple Mod effects. Upgrades by assassinating other Spymasters',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconViperSpymaster.webp', 
     variants: {
       tier1: { effects: ['8% increased effect of Temple Mods ...'] },
       tier2: { effects: ['15% increased effect of Temple Mods ...'] },
@@ -597,6 +791,7 @@ spymasters_study: {
     name: 'Synth Lab',
     color: '#cf6fcf',
     tooltip: 'Increases exp gain',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconSynthflesh.webp', 
     variants: {
       tier1: { effects: ['10% inc. exp'] },
       tier2: { effects: ['20% inc. exp'] },
@@ -615,6 +810,7 @@ spymasters_study: {
     name: "Flesh Surgeon",
     color: '#cf8c6f',
     tooltip: 'Effectiveness of unique Monsters',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconFleshSurgeon.webp',
     variants: {
       tier1: { effects: ['10% Unique Monster Effectiveness'] },
       tier2: { effects: ['20% Unique Monster Effectiveness'] },
@@ -632,14 +828,17 @@ spymasters_study: {
     name: 'Golem Works',
     color: '#8cf2cf',
 	tooltip: 'increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconGolemWorks.webp', 
     variants: {
       tier1: { effects: ['8% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
       tier2: { effects: ['15% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
       tier3: { effects: ['30% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] }
     },
-    upgrades: {   },
-	  upgradeInfoFunction: (cellObj) => "Needs 2 Generators in range to upgrade to Tier3"
-  },
+    upgrades: {  
+	tier2: { type: 'adjacent', rooms: ['dynamo'], count: 1 },
+    tier3: { type: 'adjacent', rooms: ['dynamo'], count: 2 },
+			  }
+   },
   // -------------------------
   // 12. Alchemy Lab Group
   chamber_of_souls: {
@@ -647,6 +846,7 @@ spymasters_study: {
     name: 'Alchemy Lab',
     color: '#f2cf6f',
     tooltip: 'Item rarity on Monsters',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconAlchemyLab.webp', 
     variants: {
       tier1: { effects: ['15% increased item rarity'] },
       tier2: { effects: ['30% increased item rarity'] },
@@ -664,6 +864,7 @@ spymasters_study: {
     name: "Thaumaturge's",
     color: '#6ff2cf',
     tooltip: 'Increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconThaumaturge.webp' ,
     variants: {
       tier1: { effects: ['8% increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
       tier2: { effects: ['15% increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
@@ -681,6 +882,7 @@ spymasters_study: {
     name: 'Corruption Chamber',
     color: '#f26fcf',
     tooltip: 'Rare Monsters have a 15% chance to have an additional Modifier',
+	icon:'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconCorruption.webp', 
     variants: {
       tier1: { effects: ['Rare Monsters have a 15% chance to have an additional Modifier'] },
       tier2: { effects: ['Rare Monsters have a 30% chance to have an additional Modifier'] },
@@ -698,6 +900,7 @@ spymasters_study: {
     name: 'Sacrifical Chamber',
 	color: '#6f6f6f',
     tooltip: 'More rare Chests',
+	icon:'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconSacrificialChamber.webp',
     variants: {
       tier1: { effects: ['15% increased amount of Rare Chests'] },
       tier2: { effects: ['15% increased amount of Rare Chests'] },
@@ -706,13 +909,13 @@ spymasters_study: {
     upgrades: {},
 	upgradeInfoFunction: (cellObj) => "Upgrades by sacrificing another room."
   },
-
   // -------------------------
   // 16. Reward Rooms (Joker)
   joker: {
     id: 'joker',
     name: 'Reward Room',
 	color: '#ffffff',
+	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconRewardCurrency.webp',
     tooltip: 'Special reward room. No effect.',
     variants: {
       tier1: { effects: [] }
@@ -720,8 +923,7 @@ spymasters_study: {
     upgrades: {},
 	upgradeInfoFunction: (cellObj) => "No upgrades available"
   },
-  
-   // 17. Clean Tile 
+     // 17. Clean Tile 
   Clean: {
     id: 'Clean',
     name: 'Clean Tile',
@@ -733,8 +935,24 @@ spymasters_study: {
     },
     upgrades: {},
 	upgradeInfoFunction: (cellObj) => "No upgrades available"
-  }
+  },
+  
+  sealed_vault: {
+  id: 'sealed_vault',
+  name: "Sealed Vault",
+  color: "#7a6c3a", // gold-braun, kannst du anpassen
+  icon: "https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconVault.webp", // optional, falls du Icons nutzt
+  tooltip: "Increases item rarity by 25%.",
+  variants: {
+      tier1: { effects: ['25% increased rarity of items dropped by Monsters'] },
+  upgrades: {}, // ❗ bewusst leer → keine Upgrades
+  upgradeInfoFunction: (cellObj) => "No upgrades available"
+}
+}
+   
 };
+// Liste gültiger Zellen im Logic Mode
+let validPlacementCells = [];
 
 // ------------------------------
 // Raum ↔ Code Mapping
@@ -754,6 +972,7 @@ const ROOM_CODE_MAP = {
   crimson_hall: "R",
   altar_of_sacrifice: "Z",
   joker: "J",
+  sealed_vault: "SV",
   Clean: "_"
 };
 
@@ -762,7 +981,6 @@ const CODE_ROOM_MAP = Object.fromEntries(
 );
 
 const GENERATOR_ROOMS = ['dynamo'];
-
  // ------------------------------
 // 2. Globale Variable für aktuell ausgewählten Raum
 let current = ROOM_DATA['path']; 
@@ -770,10 +988,9 @@ let current = ROOM_DATA['path'];
 const sidebarContent = document.getElementById("sidebar-content");
 const tooltipEl = document.getElementById("room-tooltip");
 
-
 let selectedCell = null; // speichert die aktuell ausgewählte Zelle auf dem Grid
 
-
+let placementMode = 'logic'; // 'logic' = automatische Vorschläge, 'manual' = alles erlaubt
 // ------------------------------
 // 3. Aktueller Raum anzeigen
 const currentRoomEl = document.getElementById('current-room-display');
@@ -782,90 +999,164 @@ function updateCurrentRoomDisplay() {
   currentRoomEl.title = current.tooltip;
 }
 updateCurrentRoomDisplay();
-
+// ------------------------------
+// 4. Palette erstellen
 // ------------------------------
 // 4. Palette erstellen
 const paletteContainer = document.getElementById('palette-container');
 
-// Palette durchlaufen
-for (const roomId in ROOM_DATA) {
-  const room = ROOM_DATA[roomId];
-  const el = document.createElement('div');
-  el.classList.add('room-palette-item');
-  el.style.backgroundColor = room.color;
+// 🔹 Zuerst den Medallion-Raum erstellen und hinzufügen
+const medallionPaletteItem = document.createElement("div");
+medallionPaletteItem.classList.add("room-palette-item");
 
-  const roomLabel = document.createElement('div');
-  roomLabel.innerText = room.name;
-  roomLabel.style.pointerEvents = 'none';
-  el.appendChild(roomLabel);
+medallionPaletteItem.textContent = "Medallion +1 Tier";
+medallionPaletteItem.title = "Increase the Tier by 1";
+medallionPaletteItem.style.backgroundColor = "#FFD700"; // z.B. gold
+medallionPaletteItem.style.border = "3px solid #7c5726"; // Oranger Rand
+medallionPaletteItem.style.borderRadius = "6px"; // optional: abgerundete Ecken
 
-  el.dataset.roomId = roomId;
-  el.title = room.tooltip;
+// Klick-Event für Medallion
+medallionPaletteItem.addEventListener("click", () => {
+    // Medallion als aktuell ausgewählten Raum setzen
+    current = { id: 'medallion', name: 'Medallion' };
 
-  // Haupt-Button klickt Raum auswählen
-  el.onclick = () => {
-    current = ROOM_DATA[roomId];
-    updateCurrentRoomDisplay();
-    updateGeneratorRanges();
-
+    // Alle aktiven Markierungen entfernen
     document.querySelectorAll('.room-palette-item').forEach(item => item.classList.remove('active'));
-    el.classList.add('active');
-  };
 
-  // Tier-Buttons nur für Spymaster & Sacrificial Chamber
-  if (roomId === 'spymasters_study' || roomId === 'altar_of_sacrifice') {
-    const tierContainer = document.createElement('div');
-	tierContainer.classList.add('tier-buttons');
-	tierContainer.style.display = 'flex';
-	tierContainer.style.flexDirection = 'row';
-	tierContainer.style.justifyContent = 'center';
-	tierContainer.style.alignItems = 'center';
-	tierContainer.style.width = '100%';
-	tierContainer.style.marginTop = '6px';
-	tierContainer.style.gap = '6px';
+    // Medallion als aktiv markieren
+    medallionPaletteItem.classList.add('active');
 
+    // Anzeige aktualisieren
+    updateCurrentRoomDisplay();
 
-
-    ['tier1','tier2','tier3'].forEach(tier => {
-      const btn = document.createElement('button');
-      btn.innerText = tier.replace('tier',''); // nur „1“, „2“, „3“
-      btn.style.fontSize = '11px';
-	  btn.style.width = '26px';
-	  btn.style.height = '26px';
-	  btn.style.padding = '0';
-	  btn.style.lineHeight = '26px';
-	  btn.style.textAlign = 'center';
-	  btn.style.cursor = 'pointer';
-
-
-
-
-      btn.onclick = (e) => {
-    e.stopPropagation(); // verhindert, dass Palette auch klickt
-    if (!selectedCell) return; // keine Zelle ausgewählt
-    // ⚡ Tier nur auf Spymaster oder Sacrificial Chamber anwenden
-    if ( selectedCell &&  ( selectedCell.room === 'spymasters_study' ||  
-							selectedCell.room === 'altar_of_sacrifice')
-		) { 
-
-        selectedCell.tier = tier;
-        selectedCell.manualTier = true; // markiert, dass Tier manuell gesetzt wurde
-        renderCell(selectedCell);       // aktualisiert die Zelle optisch
-        updateEffectsSidebar();         // aktualisiert Sidebar-Effekte
+    // Logic-Modus: nur gültige Zellen markieren
+    if (placementMode === 'logic') {
+        markValidCellsForCurrent();
     }
-	
-		else { return; // ❌ KEINE anderen Räume
+});
+
+// Medallion-Element der Palette hinzufügen
+paletteContainer.appendChild(medallionPaletteItem);
+
+// 🔹 Jetzt die normalen Räume aus ROOM_DATA hinzufügen
+for (const roomId in ROOM_DATA) {
+    const room = ROOM_DATA[roomId];
+
+    // Haupt-Element für den Raum erstellen
+   const el = document.createElement('div');
+	el.classList.add('room-palette-item');
+
+	if (room.icon) {
+    el.style.backgroundImage = `url('${room.icon}')`;
+    el.style.backgroundSize = "contain";
+    el.style.backgroundRepeat = "no-repeat";
+    el.style.backgroundPosition = "center";
+	} else {
+    el.style.backgroundColor = room.color; // Fallback, falls kein Icon
+	}
+
+
+    // Raumname hinzufügen
+    const roomLabel = document.createElement('div');
+    roomLabel.innerText = room.name;
+    roomLabel.style.pointerEvents = 'none'; // Label klickbar nicht
+    el.appendChild(roomLabel);
+
+    // Daten-Attribute setzen
+    el.dataset.roomId = roomId;
+    el.title = room.tooltip;
+
+    // Klick-Event für normalen Raum
+    el.onclick = () => {
+        current = ROOM_DATA[roomId];
+
+        // Anzeige aktualisieren
+        updateCurrentRoomDisplay();
+        updateGeneratorRanges();
+
+        // Alle aktiven Markierungen entfernen
+        document.querySelectorAll('.room-palette-item').forEach(item => item.classList.remove('active'));
+
+        // Diesen Raum als aktiv markieren
+        el.classList.add('active');
+
+        // Logic-Modus: nur gültige Zellen markieren
+        if (placementMode === 'logic') {
+            markValidCellsForCurrent();
+        }
+    };
+
+    // 🔹 Tier-Buttons nur für Spymaster & Sacrificial Chamber
+    if (roomId === 'spymasters_study' || roomId === 'altar_of_sacrifice') {
+        const tierContainer = document.createElement('div');
+        tierContainer.classList.add('tier-buttons');
+        tierContainer.style.display = 'flex';
+        tierContainer.style.flexDirection = 'row';
+        tierContainer.style.justifyContent = 'center';
+        tierContainer.style.alignItems = 'center';
+        tierContainer.style.width = '100%';
+        tierContainer.style.marginTop = '6px';
+        tierContainer.style.gap = '6px';
+
+        ['tier1','tier2','tier3'].forEach(tier => {
+            const btn = document.createElement('button');
+            btn.innerText = tier.replace('tier',''); // nur „1“, „2“, „3“
+            btn.style.fontSize = '11px';
+            btn.style.width = '26px';
+            btn.style.height = '26px';
+            btn.style.padding = '0';
+            btn.style.lineHeight = '26px';
+            btn.style.textAlign = 'center';
+            btn.style.cursor = 'pointer';
+
+            btn.onclick = (e) => {
+                e.stopPropagation(); // verhindert Klick auf den Raum selbst
+                if (!selectedCell) return; // keine Zelle ausgewählt
+
+                // Tier nur auf Spymaster oder Sacrificial Chamber anwenden
+                if (selectedCell.room === 'spymasters_study' || selectedCell.room === 'altar_of_sacrifice') {
+                    selectedCell.tier = tier;
+                    selectedCell.manualTier = true; // markiert, dass Tier manuell gesetzt wurde
+                    renderCell(selectedCell);       // Zelle optisch aktualisieren
+                    updateEffectsSidebar();         // Sidebar-Effekte aktualisieren
+                } else {
+                    return; // andere Räume ignorieren
+                }
+
+                // Nach Tier-Änderung Logic-Zellen neu markieren
+                if (placementMode === 'logic') {
+                    markValidCellsForCurrent();
+                }
+            };
+
+            tierContainer.appendChild(btn);
+        });
+
+        el.appendChild(tierContainer);
+    }
+
+    // Raum-Element der Palette hinzufügen
+    paletteContainer.appendChild(el);
 }
-};
 
-      tierContainer.appendChild(btn);
-    });
+// ------------------------------
+// Hilfsfunktion: markiert gültige Zellen im Logic-Modus
+function markValidCellsForCurrent() {
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cellObj = grid[y][x];
 
-    el.appendChild(tierContainer);
-  }
-
-  paletteContainer.appendChild(el);
+            if (isValidPlacement(cellObj)) {
+                cellObj.el.style.outline = '2px solid #00ff00'; // grün
+                cellObj.el.style.cursor = 'pointer';
+            } else {
+                cellObj.el.style.outline = '';
+                cellObj.el.style.cursor = 'not-allowed';
+            }
+        }
+    }
 }
+
 
 // ------------------------------
 // 5. Grid erstellen
@@ -877,11 +1168,42 @@ for (let y = 0; y < gridSize; y++) {
   let row = [];
   for (let x = 0; x < gridSize; x++) {
     const cell = document.createElement("div");
-    cell.classList.add("cell");
+cell.classList.add("cell");
+
+const content = document.createElement("div");
+content.classList.add("cell-content");
+cell.appendChild(content);
+
     cell.dataset.x = x;
     cell.dataset.y = y;
 
-    const cellObj = { el: cell, room: 'Clean', tier: 'tier1', manualTier: false, x, y };
+    const bridges = {
+  up: document.createElement("div"),
+  down: document.createElement("div"),
+  left: document.createElement("div"),
+  right: document.createElement("div"),
+};
+
+bridges.up.className = "bridge up";
+bridges.down.className = "bridge down";
+bridges.left.className = "bridge left";
+bridges.right.className = "bridge right";
+
+Object.values(bridges).forEach(b => {
+  cell.appendChild(b);
+});
+
+
+const cellObj = {
+  el: cell,
+  room: 'Clean',
+  tier: 'tier1',
+  manualTier: false,
+  x,
+  y,
+  bridges
+};
+
 
     // Zelle ins Grid
     gridEl.appendChild(cell);
@@ -916,7 +1238,6 @@ else {
     }
 }
 
-
   tooltipEl.innerHTML = `
     <strong>${roomData.name}</strong><br>
     Tier: ${displayTier}<br>
@@ -939,6 +1260,38 @@ else {
   }
   grid.push(row);
 }
+
+// ---------------
+// Initiale Straße setzen (unterste Reihe, 5. Spalte)
+const startX = 4; // 0-basiert: 5. Spalte
+const startY = gridSize - 1; // unterste Reihe
+const startCell = grid[startY][startX];
+startCell.room = 'path';
+startCell.tier = 'tier1';
+startCell.manualTier = false;
+renderCell(startCell);
+
+
+const modeToggle = document.getElementById("modeToggle");
+const modeInfo = document.getElementById("mode-info");
+
+// globaler Modus
+window.manualMode = false; // Standard = Logik-Modus
+
+modeToggle.addEventListener("change", () => {
+    if (modeToggle.checked) {
+        // Manueller Modus
+        window.manualMode = true;
+        modeInfo.textContent = "Manuel placement";
+        modeInfo.title = "You can freely place rooms";
+    } else {
+        // Logikmodus
+        window.manualMode = false;
+        modeInfo.textContent = "Ingame logic used";
+        modeInfo.title = "Only allowed placements possible!";
+    }
+});
+
 
   positionBigA();
 
@@ -963,278 +1316,741 @@ function positionBigA() {
   bigA.style.left = `${gridRect.left + left}px`;
 }
 
-
 positionBigA();
 window.addEventListener('resize', positionBigA);
-
 // ------------------------------
 // Generator-Reichweite nach Tier
 function getGeneratorRange(tier) {
   const t = parseInt(tier.replace('tier',''));
   return 2 + t; // Tier1 = 3 Felder, Tier2 = 4, Tier3 = 5
 }
-
 // ------------------------------
 // 6. Funktion zum Setzen eines Raums in der Zelle
 function placeRoom(x, y) {
   if (!current) return;
-
+  
   const cellObj = grid[y][x];
   selectedCell = cellObj;
 
+  // 🔹 Spezialfall: Medallion
+  if (current.id === 'medallion') {
+      if (!cellObj.room || cellObj.room === 'Clean') return; // Medallion nur auf bestehenden Räumen
+      const oldTier = cellObj.tier;
+      const next = nextTier(oldTier); // vorhandene Funktion nutzen
+      if (next) {
+          cellObj.tier = next;
+          cellObj.manualTier = true; // markiert, dass Tier manuell gesetzt wurde
+          renderCell(cellObj);
+          updateEffectsSidebar();
+      }
+      return; // fertig, sonst nichts tun
+  }
+
   // 🔹 WENN Clean gesetzt wird → kompletter Reset
   if (current.id === 'Clean') {
-    cellObj.room = 'Clean';
-    cellObj.tier = 'tier1';
-    cellObj.manualTier = false;
-    renderCell(cellObj);
-
-    recalcAllTiers();
-    updateGeneratorRanges();
-    updateEffectsSidebar();
-    return;
+      cellObj.room = 'Clean';
+      cellObj.tier = 'tier1';
+      cellObj.manualTier = false;
+      renderCell(cellObj);
+      highlightValidCells();
+      recalcAllTiers();
+      updateGeneratorRanges();
+      updateEffectsSidebar();
+      return;
   }
 
   // 🔹 Normaler Raum
+  if (placementMode === 'logic' && !isValidPlacement(cellObj)) return;
+
   cellObj.room = current.id;
   cellObj.tier = 'tier1';
   cellObj.manualTier = false;
 
   renderCell(cellObj);
-
+  highlightValidCells();
   recalcAllTiers();
   updateGeneratorRanges();
   updateEffectsSidebar();
 }
 
-function updateTier(x, y) {
-    const cellObj = grid[y][x];
-    if (!cellObj.room) return;
 
-    const room = ROOM_DATA[cellObj.room];
-    let newTier = 'tier1';
+function highlightValidCells() {
+    if (placementMode === 'manual') {
+        for (let y = 0; y < gridSize; y++) {
+            for (let x = 0; x < gridSize; x++) {
+                grid[y][x].el.style.outline = '';
+                grid[y][x].el.style.cursor = 'pointer';
+            }   }   }
+   }
+
+
+
+
+
+// Prüft, ob der aktuell ausgewählte Raum hier platziert werden darf
+function isValidPlacement(cellObj) {
+    // ✅ Manuell-Modus: Räume dürfen überall platziert werden
+    if (window.manualMode) return true;
+
+    const neighbors = getNeighbors(cellObj);
+
+    // Joker kann überall platziert werden
+    if (current.id === 'joker') {
+        return true;
+    }
+
+    // Clean kann nur gesetzt werden, wenn kein Nachbar auf diese Zelle angewiesen ist
+    if (current.id === 'Clean') {
+        return canCleanCell(cellObj);
+    }
+
+    // Bereits belegte Zellen ausschließen
+    if (cellObj.room && cellObj.room !== 'Clean') return false;
+
+    // Path nur neben bestehendem Path
+    if (current.id === 'path') {
+        return neighbors.some(n => n.room === 'path');
+    }
+
+    // Guardhouse (Garrison)
+    if (current.id === 'guardhouse') {
+        const allowedNeighbors = ['path', 'commanders_chamber', 'armoury', 'synthflesh_lab', 'spymasters_study'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Commander
+    if (current.id === 'commanders_chamber') {
+        const allowedNeighbors = ['path','guardhouse'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Armoury
+    if (current.id === 'armoury') {
+        const allowedNeighbors = ['path','bronzeworks','chamber_of_souls','guardhouse']; 
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Bronzeworks (Smithy)
+    if (current.id === 'bronzeworks') {
+        const allowedNeighbors = ['path','workshop', 'dynamo','armoury'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Dynamo (Generator)
+    if (current.id === 'dynamo') {
+        const allowedNeighbors = ['path', 'bronzeworks','synthflesh_lab','workshop','thaumaturges_laboratory','altar_of_sacrifice'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Spymaster
+    if (current.id === 'spymasters_study') {
+        const allowedNeighbors = ['path','guardhouse'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Synthflesh Lab
+    if (current.id === 'synthflesh_lab') {
+        const allowedNeighbors = ['path','surgeons_ward', 'guardhouse','dynamo'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Flesh Surgeon
+    if (current.id === 'surgeons_ward') {
+        const allowedNeighbors = ['path','synthflesh_lab'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Alchemy Lab
+    if (current.id === 'chamber_of_souls') {
+        const allowedNeighbors = ['path','thaumaturges_laboratory','armoury'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Thaumaturges Laboratory
+    if (current.id === 'thaumaturges_laboratory') {
+        const allowedNeighbors = ['path','altar_of_sacrifice','dynamo','chamber_of_souls','crimson_hall']; 
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Golem Works (Workshop)
+    if (current.id === 'workshop') {
+        const allowedNeighbors = ['path','dynamo','bronzeworks'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Corruption Chamber
+    if (current.id === 'crimson_hall') {
+        const allowedNeighbors = ['path','altar_of_sacrifice', 'thaumaturges_laboratory'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+
+    // Sacrificial Chamber
+    if (current.id === 'altar_of_sacrifice') {
+        const allowedNeighbors = ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'];
+        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    }
+	
+	// Sealed Vault
+	if (current.id === 'sealed_vault') {
+    const neighbors = getNeighbors(cellObj);
+    return neighbors.some(n => n.room === 'path');
+}
+
+
+    // Alle anderen Räume: prüfen, ob Upgrade über Nachbarn möglich
+    return neighborsForUpgrade(cellObj);
+}
+
+// Hilfsfunktion: Nachbarn der Zelle abrufen
+function getNeighbors(cellObj) {
+    return [
+        grid[cellObj.y-1]?.[cellObj.x],
+        grid[cellObj.y+1]?.[cellObj.x],
+        grid[cellObj.y]?.[cellObj.x-1],
+        grid[cellObj.y]?.[cellObj.x+1]
+    ].filter(Boolean);
+}
+
+function getReachableCellsFromPaths() {
+    const reachable = new Set();
+    const queue = [];
+
+    // Alle Paths als Startpunkte
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            if (cell.room === 'path') {
+                const key = `${x},${y}`;
+                reachable.add(key);
+                queue.push(cell);
+            }
+        }
+    }
+
+    // Flood Fill
+    while (queue.length) {
+        const cell = queue.shift();
+        const neighbors = getNeighbors(cell);
+
+        neighbors.forEach(n => {
+            const key = `${n.x},${n.y}`;
+            if (reachable.has(key)) return;
+            if (n.room === 'Clean') return;
+
+            reachable.add(key);
+            queue.push(n);
+        });
+    }
+
+    return reachable;
+}
+
+function updateReachabilityVisualization() {
+    const reachable = getReachableCellsFromPaths();
+
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            const key = `${x},${y}`;
+            cell.reachable = reachable.has(key);
+        }
+    }
+}
+
+
+
+	// Clean Funktion//
+function canCleanCell(cellObj) {
+    // Zielzelle temporär entfernen
+    const originalRoom = cellObj.room;
+    cellObj.room = 'Clean';
+
+    //  Alle Path-Zellen finden
+    const queue = [];
+    const visited = new Set();
+
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            if (grid[y][x].room === 'path') {
+                queue.push(grid[y][x]);
+                visited.add(`${x},${y}`);
+            }
+        }
+    }
+
+    // 3️⃣ Flood Fill über alle NICHT-Clean Zellen
+    while (queue.length) {
+        const c = queue.shift();
+        const neighbors = getNeighbors(c);
+
+        neighbors.forEach(n => {
+            const key = `${n.x},${n.y}`;
+            if (visited.has(key)) return;
+            if (n.room === 'Clean') return;
+
+            visited.add(key);
+            queue.push(n);
+        });
+    }
+
+    // 4️⃣ Prüfen: Gibt es noch Räume, die nicht erreichbar sind?
+    let valid = true;
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            if (cell.room !== 'Clean') {
+                const key = `${x},${y}`;
+                if (!visited.has(key)) {
+                    valid = false;
+                    break;
+                }
+            }
+        }
+    }
+
+    // 5️⃣ Zustand wiederherstellen
+    cellObj.room = originalRoom;
+    return valid;
+}
+
+
+
+
+// Prüft, ob der aktuell ausgewählte Raum hier platziert werden darf
+function neighborsForUpgrade(cellObj) {
+    if (!current || current.id === 'Clean' || current.id === 'path') return true;
 
     const neighbors = [
-        [x-1, y], [x+1, y], [x, y-1], [x, y+1]
-    ];
+        grid[cellObj.y-1]?.[cellObj.x],
+        grid[cellObj.y+1]?.[cellObj.x],
+        grid[cellObj.y]?.[cellObj.x-1],
+        grid[cellObj.y]?.[cellObj.x+1]
+    ].filter(Boolean);
 
-    // Manuell gesetzte Tiers oder spezielle Räume
+    const neighborRooms = neighbors.map(n => n.room);
+    const neighborTiers = neighbors.map(n => ({ room: n.room, tier: n.tier }));
+
+    // Prüfe alle Upgrade-Wege der Nachbarn
+    return neighbors.some(n => {
+        const upgrades = ROOM_DATA[n.room]?.upgrades || {};
+        return Object.entries(upgrades).some(([tierKey, upg]) => {
+
+            // Adjacent Upgrade prüfen
+            if (upg.type === 'adjacent') {
+                const count = neighbors.filter(nb => upg.rooms.includes(nb.room)).length;
+                if (count >= (upg.count || 1)) return true;
+            }
+
+            // Complex Upgrade prüfen
+            if (upg.type === 'complex') {
+                const requiredOk = upg.requiredAdjacent.every(r => neighborRooms.includes(r));
+                const optionalOk = upg.optionalAdjacent ? upg.optionalAdjacent.some(r => neighborRooms.includes(r)) : true;
+                const minTierOk = upg.minTier ? upg.requiredAdjacent.every(r => {
+                    const n = neighbors.find(nb => nb.room === r);
+                    if (!n) return false;
+                    return parseInt(n.tier.replace('tier','')) >= upg.minTier;
+                }) : true;
+
+                if (requiredOk && optionalOk && minTierOk) return true;
+            }
+
+            return false;
+        });
+    });
+}
+
+// Prüft, ob auf einer bestehenden Zelle ein Upgrade möglich ist
+function canUpgradeToCurrent(cellObj) {
+    if (!cellObj.room || cellObj.room === 'Clean') return false;
+    if (cellObj.manualTier) return false; // manuell gesetzte Tiers nicht automatisch upgraden
+
+    const nextTierKey = nextTier(cellObj.tier);
+    if (!nextTierKey) return false;
+
+    const roomUpgrades = ROOM_DATA[cellObj.room]?.upgrades || {};
+    const upgradeInfo = roomUpgrades[nextTierKey];
+    if (!upgradeInfo) return false;
+
+    const neighbors = [
+        grid[cellObj.y-1]?.[cellObj.x],
+        grid[cellObj.y+1]?.[cellObj.x],
+        grid[cellObj.y]?.[cellObj.x-1],
+        grid[cellObj.y]?.[cellObj.x+1]
+    ].filter(Boolean);
+
+    const neighborRooms = neighbors.map(n => n.room);
+
+    // Adjacent Upgrade
+    if (upgradeInfo.type === 'adjacent') {
+        const count = neighbors.filter(n => upgradeInfo.rooms.includes(n.room)).length;
+        return count >= (upgradeInfo.count || 1);
+    }
+
+    // Complex Upgrade
+    if (upgradeInfo.type === 'complex') {
+        const requiredOk = upgradeInfo.requiredAdjacent.every(r => neighborRooms.includes(r));
+        const optionalOk = upgradeInfo.optionalAdjacent ? upgradeInfo.optionalAdjacent.some(r => neighborRooms.includes(r)) : true;
+        const minTierOk = upgradeInfo.minTier ? upgradeInfo.requiredAdjacent.every(r => {
+            const n = neighbors.find(nb => nb.room === r);
+            if (!n) return false;
+            return parseInt(n.tier.replace('tier','')) >= upgradeInfo.minTier;
+        }) : true;
+
+        return requiredOk && optionalOk && minTierOk;
+    }
+
+    return false;
+}
+
+
+
+
+function updateTier(x, y) {
+    const cellObj = grid[y][x];
+    if (!cellObj.room || cellObj.room === 'Clean') return;
+
+    // Manuell gesetztes Tier immer priorisieren
     if (cellObj.manualTier) {
         renderCell(cellObj);
         return;
     }
 
-    if (cellObj.room === 'spymasters_study' || cellObj.room === 'altar_of_sacrifice') {
-        cellObj.tier = 'tier1';
-        renderCell(cellObj);
-        return;
-    }
+    const room = ROOM_DATA[cellObj.room];
+    const neighbors = [
+        [x-1, y], [x+1, y], [x, y-1], [x, y+1]
+    ];
 
-    // --------------------------
-    // Spymaster
-    if (cellObj.room === 'spymasters_study') {
-        let tier = 'tier1';
-        const removedSpymasters = neighbors.reduce((count,[nx,ny])=>{
-            const n = grid[ny]?.[nx];
-            if(!n) return count;
-            if(n.room === 'Clean') return count+1;
-            return count;
-        },0);
-        if (removedSpymasters >= 2) tier = 'tier3';
-        else if (removedSpymasters >= 1) tier = 'tier2';
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Altar of Sacrifice
-    if (cellObj.room === 'altar_of_sacrifice') {
-        let tier = 'tier1';
-        const removedSpymasters = neighbors.reduce((count,[nx,ny])=>{
-            const n = grid[ny]?.[nx];
-            if(!n) return count;
-            if(n.room === 'Clean') return count+1;
-            return count;
-        },0);
-        if (removedSpymasters >= 2) tier = 'tier3';
-        else if (removedSpymasters >= 1) tier = 'tier2';
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Thaumaturge
-    if (cellObj.room === 'thaumaturges_laboratory') {
-        let tier = 'tier1';
-        const sacrificialNeighbors = neighbors
-            .map(([nx, ny]) => grid[ny]?.[nx])
-            .filter(n => n && n.room === 'altar_of_sacrifice');
-
-        const hasTier3Altar = sacrificialNeighbors.some(n => n.tier === 'tier3');
-        const altarCount = sacrificialNeighbors.length;
-
-        if (hasTier3Altar || altarCount >= 2) tier = 'tier3';
-        else if (altarCount >= 1) tier = 'tier2';
-
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Commander
-    if (cellObj.room === 'commanders_chamber') {
-        let tier = 'tier1';
-        let guardhouseCount = 0;
-        neighbors.forEach(([nx, ny]) => {
-            const neighbor = grid[ny]?.[nx];
-            if (!neighbor) return;
-            if (neighbor.room === 'guardhouse') guardhouseCount++;
-        });
-        if (guardhouseCount >= 3) tier = 'tier3';
-        else if (guardhouseCount >= 2) tier = 'tier2';
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Bronzeworks (Smithy)
-    if (cellObj.room === 'bronzeworks') {
-        let tier = 'tier1';
-        const hasWorkshopAdjacent = neighbors.some(([nx, ny]) => {
-            const n = grid[ny]?.[nx];
-            return n && n.room === 'workshop';
-        });
-        const hasGeneratorInRange = countPoweringGenerators(x, y) > 0;
-
-        if (hasWorkshopAdjacent || hasGeneratorInRange) tier = 'tier2';
-        if (hasWorkshopAdjacent && hasGeneratorInRange) tier = 'tier3';
-
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Surgeons Ward
-    if (cellObj.room === 'surgeons_ward') {
-        let tier = 'tier1';
-        const synthLabs = neighbors
-            .map(([nx, ny]) => grid[ny]?.[nx])
-            .filter(n => n && n.room === 'synthflesh_lab');
-
-        if (synthLabs.length >= 1) tier = 'tier2';
-        const hasTier3Synth = synthLabs.some(n => n.tier === 'tier3');
-        if (synthLabs.length >= 2 || hasTier3Synth) tier = 'tier3';
-
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-    // --------------------------
-    // Synthflesh Lab
-    if (cellObj.room === 'synthflesh_lab') {
-        let tier = 'tier1';
-        const surgeonNeighbors = neighbors
-            .map(([nx,ny]) => grid[ny]?.[nx])
-            .filter(n => n && n.room === 'surgeons_ward');
-        const hasSurgeon = surgeonNeighbors.length > 0;
-        const genNearby = countPoweringGenerators(x, y) > 0;
-
-        if (genNearby || hasSurgeon) tier = 'tier2';
-        if (genNearby && surgeonNeighbors.some(n => n.tier === 'tier2' || n.tier === 'tier3')) tier = 'tier3';
-
-        cellObj.tier = tier;
-        renderCell(cellObj);
-
-        surgeonNeighbors.forEach(n => {
-            if (!n.manualTier && maxTier(n.tier, 'tier2') !== n.tier) {
-                n.tier = 'tier2';
-                renderCell(n);
+    // Spezialfälle zuerst
+    switch (cellObj.room) {
+        case 'spymasters_study':
+            {
+                let tier = 'tier1';
+                const removedNeighbors = neighbors.reduce((count,[nx,ny])=>{
+                    const n = grid[ny]?.[nx];
+                    if(!n) return count;
+                    if(n.room === 'Clean') return count+1;
+                    return count;
+                },0);
+                if (removedNeighbors >= 2) tier = 'tier3';
+                else if (removedNeighbors >= 1) tier = 'tier2';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
             }
-        });
-        return;
+        case 'altar_of_sacrifice':
+            {
+                let tier = 'tier1';
+                const removedNeighbors = neighbors.reduce((count,[nx,ny])=>{
+                    const n = grid[ny]?.[nx];
+                    if(!n) return count;
+                    if(n.room === 'Clean') return count+1;
+                    return count;
+                },0);
+                if (removedNeighbors >= 2) tier = 'tier3';
+                else if (removedNeighbors >= 1) tier = 'tier2';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'thaumaturges_laboratory':
+            {
+                let tier = 'tier1';
+                const sacrificialNeighbors = neighbors
+                    .map(([nx, ny]) => grid[ny]?.[nx])
+                    .filter(n => n && n.room === 'altar_of_sacrifice');
+                const hasTier3Altar = sacrificialNeighbors.some(n => n.tier === 'tier3');
+                const altarCount = sacrificialNeighbors.length;
+                if (hasTier3Altar || altarCount >= 2) tier = 'tier3';
+                else if (altarCount >= 1) tier = 'tier2';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'commanders_chamber':
+            {
+                let tier = 'tier1';
+                let guardhouseCount = 0;
+                neighbors.forEach(([nx, ny]) => {
+                    const n = grid[ny]?.[nx];
+                    if (n && n.room === 'guardhouse') guardhouseCount++;
+                });
+                if (guardhouseCount >= 3) tier = 'tier3';
+                else if (guardhouseCount >= 2) tier = 'tier2';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'bronzeworks':
+            {
+                let tier = 'tier1';
+                const hasWorkshop = neighbors.some(([nx, ny]) => {
+                    const n = grid[ny]?.[nx];
+                    return n && n.room === 'workshop';
+                });
+                const genNearby = countPoweringGenerators(x, y) > 0;
+                if (hasWorkshop || genNearby) tier = 'tier2';
+                if (hasWorkshop && genNearby) tier = 'tier3';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'synthflesh_lab':
+            {
+                let tier = 'tier1';
+                const surgeonNeighbors = neighbors
+                    .map(([nx,ny]) => grid[ny]?.[nx])
+                    .filter(n => n && n.room === 'surgeons_ward');
+                const hasSurgeon = surgeonNeighbors.length > 0;
+                const genNearby = countPoweringGenerators(x, y) > 0;
+                if (hasSurgeon || genNearby) tier = 'tier2';
+                if (hasSurgeon && surgeonNeighbors.some(n => n.tier === 'tier2' || n.tier === 'tier3') && genNearby) tier = 'tier3';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'surgeons_ward':
+            {
+                let tier = 'tier1';
+                const synthLabs = neighbors
+                    .map(([nx, ny]) => grid[ny]?.[nx])
+                    .filter(n => n && n.room === 'synthflesh_lab');
+                if (synthLabs.length >= 1) tier = 'tier2';
+                if (synthLabs.length >= 2 || synthLabs.some(n => n.tier === 'tier3')) tier = 'tier3';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+        case 'workshop':
+            {
+                let tier = 'tier1';
+                const genCount = countPoweringGenerators(x, y);
+                if (genCount >= 2) tier = 'tier3';
+                else if (genCount >= 1) tier = 'tier2';
+                cellObj.tier = tier;
+                renderCell(cellObj);
+                return;
+            }
+			
     }
 
-    // --------------------------
-    // Golem Works
-    if (cellObj.room === 'workshop') {
-        let tier = 'tier1';
-        const genCount = countPoweringGenerators(x, y);
-        if (genCount >= 2) tier = 'tier3';
-        else if (genCount >= 1) tier = 'tier2';
-
-        cellObj.tier = tier;
-        renderCell(cellObj);
-        return;
-    }
-
-  
-    // --------------------------
-    // Adjacent / Complex Upgrades
+    // Generische Upgrade-Logik für Räume mit ROOM_DATA.upgrades
     const roomUpgrades = room.upgrades || {};
     let maxTierAchieved = 'tier1';
 
     for (const tierKey in roomUpgrades) {
         const upgrade = roomUpgrades[tierKey];
-
         if (upgrade.type === 'adjacent') {
             let count = 0;
             neighbors.forEach(([nx, ny]) => {
-                const neighbor = grid[ny]?.[nx];
-                if (!neighbor) return;
-                if (upgrade.rooms.includes(neighbor.room)) count++;
+                const n = grid[ny]?.[nx];
+                if (!n) return;
+                if (upgrade.rooms.includes(n.room)) count++;
             });
-            if (count >= upgrade.count) {
-                maxTierAchieved = maxTier(maxTierAchieved, tierKey);
-            }
-        }
+            if (count >= upgrade.count) maxTierAchieved = maxTier(maxTierAchieved, tierKey);
+        } else 
+		if (upgrade.type === 'complex') {
+    const hasAll = upgrade.requiredAdjacent.every(reqRoom =>
+        neighbors.some(n => n.room === reqRoom)
+    );
 
-        if (upgrade.type === 'complex') {
-            const adjacentRooms = neighbors
-                .map(([nx,ny]) => grid[ny]?.[nx]?.room)
-                .filter(r => r);
-            const hasRequired = upgrade.requiredAdjacent.every(r => adjacentRooms.includes(r));
-            const hasOptional = upgrade.optionalAdjacent.some(r => adjacentRooms.includes(r));
-            if (hasRequired && hasOptional) {
-                maxTierAchieved = maxTier(maxTierAchieved, tierKey);
-            }
-        }
+    if (hasAll) {
+        tier = Number(tierKey);
+    }
+}
+
     }
 
     cellObj.tier = maxTierAchieved;
     renderCell(cellObj);
 }
-
-
 				// UPdatetier fertig //
 
 function recalcAllTiers() {
-  // 1️⃣ Alle automatischen Tiers zurücksetzen
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize; x++) {
-      const c = grid[y][x];
-      if (c.room === 'Clean') continue;
-      if (!c.manualTier) {
-        c.tier = 'tier1';
-      }
+    // 1️⃣ Schritt: Alle Räume auf Tier1 zurücksetzen (außer manualTier)
+    for (let y = 0; y < grid.length; y++) {
+        for (let x = 0; x < grid[y].length; x++) {
+            const cell = grid[y][x];
+            if (cell.room && !cell.manualTier) {
+                cell.tier = 'tier1';
+            }
+        }
     }
-  }
 
-  // 2️⃣ Mehrfach neu berechnen (Abhängigkeiten!)
-  for (let pass = 0; pass < 3; pass++) {
-    for (let y = 0; y < gridSize; y++) {
-      for (let x = 0; x < gridSize; x++) {
-        updateTier(x, y);
-        updateGuardhouseVariant(x, y);
-      }
+    // 2️⃣ Schritt: Iteratives Update, um Abhängigkeiten zu berücksichtigen
+    let changed;
+    let iteration = 0;
+    const maxIterations = 10; // Sicherheit, um Endlosschleifen zu vermeiden
+    do {
+        changed = false;
+        iteration++;
+
+        for (let y = 0; y < grid.length; y++) {
+            for (let x = 0; x < grid[y].length; x++) {
+                const cell = grid[y][x];
+                if (!cell.room || cell.room === 'Clean') continue;
+
+                const oldTier = cell.tier;
+
+                // 🔹 generisches Update für Tier1–3
+                updateTier(x, y);
+
+                if (cell.tier !== oldTier) changed = true;
+            }
+        }
+
+        // 🔹 Spezielles Update für Garrison (Tier4–7)
+        for (let y = 0; y < grid.length; y++) {
+            for (let x = 0; x < grid[y].length; x++) {
+                const cell = grid[y][x];
+                if (cell.room === 'guardhouse' && !cell.manualTier) {
+                    const oldTier = cell.tier;
+                    updateGuardhouseVariant(x, y);
+                    if (cell.tier !== oldTier) changed = true;
+                }
+            }
+        }
+
+    } while (changed && iteration < maxIterations);
+
+      // 3️⃣ Durchgänge neu berechnen
+    updateReachability();
+	updateBridges();
+
+
+    // 4️⃣ Alle Zellen rendern
+    for (let y = 0; y < grid.length; y++) {
+        for (let x = 0; x < grid[y].length; x++) {
+            renderCell(grid[y][x]);
+        }
     }
-  }
 }
+
+
+function updateReachability() {
+    // 1️⃣ Alle Zellen erstmal als nicht erreichbar markieren
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            grid[y][x].reachable = false;
+        }
+    }
+
+    // 2️⃣ Startpunkte: alle Paths
+    const queue = [];
+
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            if (cell.room === 'path') {
+                cell.reachable = true;
+                queue.push(cell);
+            }
+        }
+    }
+
+    // 3️⃣ Flood-Fill über erlaubte Verbindungen
+    while (queue.length > 0) {
+        const cell = queue.shift();
+
+        const neighbors = getNeighbors(cell);
+        neighbors.forEach(n => {
+            if (n.reachable) return;
+            if (n.room === 'Clean') return;
+
+            // Verbindung prüfen
+            if (areRoomsConnected(cell, n)) {
+                n.reachable = true;
+                queue.push(n);
+            }
+        });
+    }
+}
+
+function updateBridges() {
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            if (!cell.bridges) continue;
+
+            // Reset
+            Object.values(cell.bridges).forEach(b => {
+			b.classList.remove("active");
+			});
+
+
+            if (!cell.reachable) continue;
+
+            const neighbors = getNeighbors(cell);
+
+            neighbors.forEach(n => {
+                if (!n.reachable) return;
+                if (!areRoomsConnected(cell, n)) return;
+
+                if (n.x === cell.x && n.y === cell.y - 1) {
+                    cell.bridges.up.classList.add("up", "active");
+                }
+                if (n.x === cell.x && n.y === cell.y + 1) {
+                    cell.bridges.down.classList.add("down", "active");
+                }
+                if (n.x === cell.x - 1 && n.y === cell.y) {
+                    cell.bridges.left.classList.add("left", "active");
+                }
+                if (n.x === cell.x + 1 && n.y === cell.y) {
+                    cell.bridges.right.classList.add("right", "active");
+                }
+            });
+        }
+    }
+}
+
+
+function areRoomsConnected(a, b) {
+
+    // 1️⃣ Path verbindet immer
+    if (a.room === 'path' || b.room === 'path') return true;
+
+    // 2️⃣ Dynamo-Sonderlogik
+    if (a.room === 'dynamo' || b.room === 'dynamo') {
+        const dyn = a.room === 'dynamo' ? a : b;
+        const other = dyn === a ? b : a;
+
+        // Dynamo ↔ Path
+        if (other.room === 'path') return true;
+
+        // Dynamo → Gebäude, die es upgraden kann
+        const dynUpgrades = ROOM_DATA['dynamo']?.upgrades || {};
+        for (const upg of Object.values(dynUpgrades)) {
+            if (upg.rooms?.includes(other.room)) return true;
+        }
+
+        // Gebäude → Dynamo (Gebäude braucht Dynamo)
+        const otherUpgrades = ROOM_DATA[other.room]?.upgrades || {};
+        for (const upg of Object.values(otherUpgrades)) {
+            if (upg.rooms?.includes('dynamo')) return true;
+            if (upg.requiredAdjacent?.includes('dynamo')) return true;
+        }
+
+        return false;
+    }
+
+    // 3️⃣ Normale Upgrade-basierte Verbindung
+    const aUpgrades = ROOM_DATA[a.room]?.upgrades || {};
+    const bUpgrades = ROOM_DATA[b.room]?.upgrades || {};
+
+    for (const upg of Object.values(aUpgrades)) {
+        if (upg.type === 'adjacent' && upg.rooms?.includes(b.room)) return true;
+        if (upg.type === 'complex' && upg.requiredAdjacent?.includes(b.room)) return true;
+    }
+
+    for (const upg of Object.values(bUpgrades)) {
+        if (upg.type === 'adjacent' && upg.rooms?.includes(a.room)) return true;
+        if (upg.type === 'complex' && upg.requiredAdjacent?.includes(a.room)) return true;
+    }
+
+    return false;
+}
+
+
+
 
 // Hilfsfunktion: höheres Tier
 function maxTier(t1, t2) {
@@ -1245,86 +2061,197 @@ function maxTier(t1, t2) {
 
 // renderCell anpassen für Sidebar/Tooltip
 function renderCell(cellObj) {
-  if (!ROOM_DATA[cellObj.room]) return;
+    if (!ROOM_DATA[cellObj.room]) return;
 
-  const room = ROOM_DATA[cellObj.room];
-  cellObj.el.style.backgroundColor = room.color;
+    const room = ROOM_DATA[cellObj.room];
+    const content = cellObj.el.querySelector(".cell-content");
+    if (!content) return;
 
-  const effects = room.variants[cellObj.tier]?.effects || [];
-  const displayTier = TIER_DISPLAY_NAME[cellObj.tier] || cellObj.tier;
+    // ----------------------------
+    // Zellenfarbe
+    cellObj.el.style.backgroundColor = room.color;
 
-  //cellObj.el.title = `${room.name} (${displayTier})\n${effects.join('\n')}`;
+    // ----------------------------
+    // Grid-Rotation
+    const gridRotation = window.gridRotation || 0;
+    cellObj.el.style.transform = `rotate(${gridRotation}deg)`;
 
-  let innerHTML = '';
+    // Content richtet Rotation wieder aus
+    content.style.position = "relative";
+    content.style.width = "100%";
+    content.style.height = "100%";
+    content.style.transform = `rotate(${-gridRotation}deg)`;
 
-  if (cellObj.room === 'Clean') {
-    innerHTML = '';
-  } else if (['tier4','tier5','tier6','tier7'].includes(cellObj.tier)) {
-    let tierShort = displayTier.split(' ')[1] || displayTier;
-    if (displayTier.includes('Transcendent')) tierShort = 'T' + tierShort;
-    if (displayTier.includes('Legion')) tierShort = 'L' + tierShort;
+    // ----------------------------
+    // ICON ELEMENT
+    let iconEl = content.querySelector(".cell-icon");
+    if (!iconEl) {
+        iconEl = document.createElement("div");
+        iconEl.classList.add("cell-icon");
+        content.appendChild(iconEl);
+    }
 
-    innerHTML = `<span class="room-initial">${tierShort}</span>`;
-  } else {
-    const words = room.name.split(" ");
-    let initials = words.map(w => w[0]).join("");
-    if (initials.length > 2) initials = initials.slice(0,2);
+    // Icon Styling
+    iconEl.style.position = "absolute";
+    iconEl.style.top = "50%";
+    iconEl.style.left = "50%";
+    iconEl.style.width = "70%";
+    iconEl.style.height = "70%";
+	iconEl.style.transform = "translate(-50%, -50%) rotate(-45deg)";
+    iconEl.style.backgroundRepeat = "no-repeat";
+    iconEl.style.backgroundSize = "contain";
+    iconEl.style.backgroundPosition = "center";
+    iconEl.style.pointerEvents = "none";
 
-    innerHTML = `<span class="room-initial">${initials}</span>`;
-    innerHTML += `<span class="tier-number">${cellObj.tier.replace('tier','')}</span>`;
-  }
-
-  cellObj.el.innerHTML = innerHTML;
-
-  if (!hasRequiredEnergy(cellObj)) {
-    cellObj.el.classList.add("no-power");
-  } else {
-    cellObj.el.classList.remove("no-power");
-  }
-   
+    // Icon setzen
+if (cellObj.room === "guardhouse") {
+    if (["tier4","tier5"].includes(cellObj.tier) && room.transcendentIcon) {
+        // Transcendent Barracks Icon
+        iconEl.style.backgroundImage = `url(${room.transcendentIcon})`;
+        iconEl.style.display = "block";
+    } else if (["tier6","tier7"].includes(cellObj.tier) && room.legionIcon) {
+        // Legion Barracks Icon
+        iconEl.style.backgroundImage = `url(${room.legionIcon})`;
+        iconEl.style.display = "block";
+    } else {
+        // Standard Guardhouse Icon
+        iconEl.style.backgroundImage = room.icon ? `url(${room.icon})` : "";
+        iconEl.style.display = room.icon ? "block" : "none";
+    }
+} else {
+    // Alle anderen Räume
+    iconEl.style.backgroundImage = (cellObj.room !== "Clean" && room.icon) ? `url(${room.icon})` : "";
+    iconEl.style.display = (cellObj.room !== "Clean" && room.icon) ? "block" : "none";
 }
+
+
+    // ----------------------------
+    // LABEL-CONTAINER (nur Tier)
+    let labelEl = content.querySelector(".cell-label");
+    if (!labelEl) {
+        labelEl = document.createElement("div");
+        labelEl.classList.add("cell-label");
+        content.appendChild(labelEl);
+    }
+
+    labelEl.style.position = "absolute";
+    labelEl.style.inset = "0";
+    labelEl.style.pointerEvents = "none";
+
+    // ----------------------------
+    // TIER
+    let tierEl = labelEl.querySelector(".cell-tier");
+    if (!tierEl) {
+        tierEl = document.createElement("span");
+        tierEl.classList.add("cell-tier");
+        labelEl.appendChild(tierEl);
+    }
+
+    if (
+        cellObj.room === "guardhouse" &&
+        ["tier4", "tier5", "tier6", "tier7"].includes(cellObj.tier)
+    ) {
+        const tierMapping = { tier4: 2, tier5: 3, tier6: 2, tier7: 3 };
+        tierEl.textContent = tierMapping[cellObj.tier] || "";
+    } else {
+       // Keine Tieranzeige für Path
+if (cellObj.room === "path" || cellObj.room === "Clean") {
+    tierEl.textContent = "";
+} 
+// Sonderfall Guardhouse (Legion / Transcendent)
+else if (
+    cellObj.room === "guardhouse" &&
+    ["tier4", "tier5", "tier6", "tier7"].includes(cellObj.tier)
+) {
+    const tierMapping = { tier4: 2, tier5: 3, tier6: 2, tier7: 3 };
+    tierEl.textContent = tierMapping[cellObj.tier] || "";
+} 
+// Alle anderen Räume
+else {
+    tierEl.textContent = cellObj.tier.replace("tier", "");
+}
+
+    }
+
+    tierEl.style.position = "absolute";
+    tierEl.style.right = "4px";
+    tierEl.style.bottom = "2px";
+    tierEl.style.fontSize = "18px";
+    tierEl.style.fontWeight = "bold";
+    tierEl.style.color = "#fff";
+    tierEl.style.textShadow = "0 0 3px #000";
+
+    // ----------------------------
+    // Energie & Reachability
+    if (!hasRequiredEnergy(cellObj)) {
+        cellObj.el.classList.add("no-power");
+    } else {
+        cellObj.el.classList.remove("no-power");
+    }
+}
+
+
+
+// Hilfsfunktion: Rotation der Initialen/Tier-Nummer gegen die Grid-Drehung
+function getCellRotation(cellObj) {
+    // Beispiel: wenn das Grid insgesamt z.B. 90° gedreht ist, können wir gegenrotieren
+    // Hier anpassen, je nachdem wie du die Grid-Drehung speicherst
+    const gridRotation = window.gridRotation || 0; // global variable oder berechnet
+    return -0;
+}
+
+
+
 
 function updateGuardhouseVariant(x, y) {
-  const cellObj = grid[y][x];
-  if (!cellObj.room || cellObj.room !== 'guardhouse') return;
+    const cellObj = grid[y][x];
+    if (!cellObj.room || cellObj.room !== 'guardhouse') return;
 
-  const neighbors = [
-    [x-1,y], [x+1,y], [x,y-1], [x,y+1]
-  ];
+    const neighbors = [
+        [x-1, y], [x+1, y], [x, y-1], [x, y+1]
+    ];
 
-  // Liste der angrenzenden Raum-IDs
-  let adjacentRooms = neighbors
-    .map(([nx,ny]) => grid[ny]?.[nx]?.room)
-    .filter(r => r);
+    // Liste der angrenzenden Raum-IDs
+    const adjacentRooms = neighbors
+        .map(([nx, ny]) => grid[ny]?.[nx]?.room)
+        .filter(r => r);
 
-  let newTier = 'tier1';
-  const room = ROOM_DATA['guardhouse'];
-
-  // -----------------------------
-  // 1️⃣ Normale Adjacent-Tiers prüfen
-  for (const tier in room.upgrades) {
-    const upgrade = room.upgrades[tier];
-
-    if (upgrade.type === 'adjacent') {
-      let count = 0;
-      upgrade.rooms.forEach(r => {
-        if (adjacentRooms.includes(r)) count++;
-      });
-      if (count >= upgrade.count) newTier = tier;
-    }
+    let newTier = 'tier1';
+    const room = ROOM_DATA['guardhouse'];
 
     // -----------------------------
-    // 2️⃣ Komplexe Upgrades prüfen (Tier4, Tier6)
-    if (upgrade.type === 'complex') {
-      const hasRequired = upgrade.requiredAdjacent.every(r => adjacentRooms.includes(r));
-      const hasOptional = upgrade.optionalAdjacent.some(r => adjacentRooms.includes(r));
-      if (hasRequired && hasOptional) newTier = tier;
-    }
-  }
+    // Upgrade-Logik für alle definierten Upgrades
+    for (const tier in room.upgrades) {
+        const upgrade = room.upgrades[tier];
 
-  cellObj.tier = newTier;
-  renderCell(cellObj);
+        if (upgrade.type === 'adjacent') {
+            if (upgrade.requireAll) {
+                // Tier nur, wenn alle Räume vorhanden sind
+                const allPresent = upgrade.rooms.every(r => adjacentRooms.includes(r));
+                if (allPresent) newTier = tier;
+            } else {
+                // alte Logik: mindestens upgrade.count Räume vorhanden
+                let count = 0;
+                upgrade.rooms.forEach(r => {
+                    if (adjacentRooms.includes(r)) count++;
+                });
+                if (count >= (upgrade.count || 1)) newTier = tier;
+            }
+        }
+
+        // -----------------------------
+        // Komplexe Upgrades prüfen (Tier4, Tier6)
+        if (upgrade.type === 'complex') {
+            const hasRequired = upgrade.requiredAdjacent.every(r => adjacentRooms.includes(r));
+            const hasOptional = upgrade.optionalAdjacent ? upgrade.optionalAdjacent.some(r => adjacentRooms.includes(r)) : true;
+            if (hasRequired && hasOptional) newTier = tier;
+        }
+    }
+
+    cellObj.tier = newTier;
+    renderCell(cellObj);
 }
+
 
 function countConnectedGenerators(x, y) {
   const visited = new Set();
@@ -1425,9 +2352,6 @@ function getGeneratorBonusForCell(targetCell) {
 
   return bonus;
 }
-
-
-
 		//UpdateEffectsSidebar//
 function updateEffectsSidebar() {
   sidebarContent.innerHTML = "";
@@ -1526,31 +2450,28 @@ function updateEffectsSidebar() {
     sidebarContent.innerHTML = "<em>No room effects yet.</em>";
   }
 }
-
-const resetButton = document.getElementById("reset-button");
-
-resetButton.onclick = () => {
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize; x++) {
-      const cellObj = grid[y][x];
-      cellObj.room = 'Clean';
-      cellObj.tier = 'tier1';
-	  cellObj.manualTier = false;
-
-      renderCell(cellObj);
+//reset button
+const resetButton = document.getElementById('reset-button').onclick = () => {
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            cell.room = 'Clean';
+            cell.tier = 'tier1';
+            cell.manualTier = false;
+            renderCell(cell);
+        }
     }
-  }
+    // Straße wieder setzen
+    const startCell = grid[gridSize - 1][4];
+    startCell.room = 'path';
+    startCell.tier = 'tier1';
+    renderCell(startCell);
 
-  // Alles neu berechnen
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize; x++) {
-      recalcAllTiers();
+    recalcAllTiers();
+    updateGeneratorRanges();
+    updateEffectsSidebar();
 
-    }
-  }
 
-  updateGeneratorRanges();
-  updateEffectsSidebar();
 
   // Optional: aktive Palette abwählen
   document.querySelectorAll('.room-palette-item').forEach(item => {
@@ -1559,11 +2480,9 @@ resetButton.onclick = () => {
 };
 
 const saveButton = document.getElementById("save-button");
-const loadButton = document.getElementById("load-button");
 const exportButton = document.getElementById("export-button");
 
 saveButton.onclick = saveLayout;
-loadButton.onclick = loadLayout;
 exportButton.onclick = exportLayoutAsLink;
 
   for (let y = 0; y < gridSize; y++) {
@@ -1578,7 +2497,7 @@ exportButton.onclick = exportLayoutAsLink;
   }
   updateEffectsSidebar();
 
-
+// countPoweringGenerators nur noch mit isUpgradedByGenerator
 function countPoweringGenerators(x, y) {
     let count = 0;
     const generators = getActiveGenerators();
@@ -1599,19 +2518,14 @@ function countPoweringGenerators(x, y) {
             const cell = grid[cy]?.[cx];
             if (!cell) continue;
 
-            // Generator selbst → Startpunkt
-            if (cx === gen.x && cy === gen.y) {
-                // darf weiterlaufen
-            } 
             // Ziel erreicht
-            else if (cx === x && cy === y) {
+            if (cx === x && cy === y) {
                 count++;
                 break;
-            } 
-            // Energie darf nur über Pfade fließen
-            else if (cell.room !== 'path') {
-                continue;
             }
+
+            // Energie fließt durch alle Räume außer Clean
+            if (cell.room === 'Clean') continue;
 
             // Nachbarn prüfen
             [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx, dy]) => {
@@ -1628,67 +2542,92 @@ function countPoweringGenerators(x, y) {
 }
 
 
+// Angepasste isUpgradedByGenerator für deine Räume
+function isUpgradedByGenerator(cellObj) {
+    const upgradeable = ['bronzeworks','synthflesh_lab','workshop'];
+    if (!upgradeable.includes(cellObj.room)) return false;
+    return isPoweredByGenerator(cellObj);
+}
 
+// Prüft, ob ein Raum von mindestens einem Generator tatsächlich erreicht wird
+function isPoweredByGenerator(cellObj) {
+    const generators = getActiveGenerators();
+    if (!generators.length) return false;
 
+    for (const gen of generators) {
+        const maxRange = getGeneratorRange(gen.tier);
+        const visited = new Set();
+        const queue = [{ x: gen.x, y: gen.y, distance: 0 }];
 
+        while (queue.length) {
+            const { x, y, distance } = queue.shift();
+            const key = `${x},${y}`;
+            if (visited.has(key)) continue;
+            visited.add(key);
 
+            if (x === cellObj.x && y === cellObj.y) return true;
+            if (distance >= maxRange) continue;
+
+            // Energie darf nur durch Räume fließen, außer leere Tiles blockieren
+            const cell = grid[y]?.[x];
+            if (!cell) continue;
+
+            [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx, dy]) => {
+                const nx = x + dx;
+                const ny = y + dy;
+                const nCell = grid[ny]?.[nx];
+                if (nCell && nCell.room !== 'Clean') {
+                    queue.push({ x: nx, y: ny, distance: distance + 1 });
+                }
+            });
+        }
+    }
+
+    return false;
+}
  
 // Prüft, ob die Zelle genügend Generator-Energie hat
 function hasRequiredEnergy(cellObj) {
     const roomId = cellObj.room;
+
     // Nur bestimmte Räume benötigen Generator
     const roomsNeedingGenerator = ['workshop', 'bronzeworks', 'synthflesh_lab'];
-
-    if (!roomsNeedingGenerator.includes(roomId)) {
-        return true; // alle anderen Räume haben immer "genug Energie"
-    }
+    if (!roomsNeedingGenerator.includes(roomId)) return true;
 
     const genCount = countPoweringGenerators(cellObj.x, cellObj.y);
+    const neighbors = [
+        [cellObj.x-1, cellObj.y], [cellObj.x+1, cellObj.y],
+        [cellObj.x, cellObj.y-1], [cellObj.x, cellObj.y+1]
+    ];
 
-    // Workshop: Tier3 = 2 Generatoren, Tier2 = 1 Generator
     if (roomId === 'workshop') {
         if (cellObj.tier === 'tier3') return genCount >= 2;
         if (cellObj.tier === 'tier2') return genCount >= 1;
         return true;
     }
 
-    // Bronzeworks: Tier3 = Workshop + Generator, Tier2 = Workshop oder Generator
     if (roomId === 'bronzeworks') {
-        const neighbors = [
-            [cellObj.x-1, cellObj.y], [cellObj.x+1, cellObj.y], 
-            [cellObj.x, cellObj.y-1], [cellObj.x, cellObj.y+1]
-        ];
         const hasWorkshopAdjacent = neighbors.some(([nx, ny]) => {
             const n = grid[ny]?.[nx];
             return n && n.room === 'workshop';
         });
-
         if (cellObj.tier === 'tier3') return hasWorkshopAdjacent && genCount > 0;
         if (cellObj.tier === 'tier2') return hasWorkshopAdjacent || genCount > 0;
         return true;
     }
 
-    // Synthflesh Lab: Tier3 = Surgeon + Generator, Tier2 = Surgeon oder Generator
     if (roomId === 'synthflesh_lab') {
-        const neighbors = [
-            [cellObj.x-1, cellObj.y], [cellObj.x+1, cellObj.y], 
-            [cellObj.x, cellObj.y-1], [cellObj.x, cellObj.y+1]
-        ];
         const hasSurgeonAdjacent = neighbors.some(([nx, ny]) => {
             const n = grid[ny]?.[nx];
             return n && n.room === 'surgeons_ward';
         });
-
         if (cellObj.tier === 'tier3') return hasSurgeonAdjacent && genCount > 0;
         if (cellObj.tier === 'tier2') return hasSurgeonAdjacent || genCount > 0;
         return true;
     }
 
-    return true; // Default
+    return true;
 }
-
-
-
 
 function updateGeneratorRanges() {
   // alles zurücksetzen
@@ -1716,7 +2655,6 @@ function updateGeneratorRanges() {
       }
     }
   });
-
   // 2️⃣ Nur äußere Kante markieren
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
@@ -1737,7 +2675,6 @@ function updateGeneratorRanges() {
     }
   }
 }
-
 // ------------------------------
 // 💾 Layout speichern
 function saveLayout() {
@@ -1755,15 +2692,14 @@ function saveLayout() {
   }
 
   localStorage.setItem("atziriTempleLayout", JSON.stringify(layout));
-  alert("Layout gespeichert!");
+  alert("Layout saved!");
 }
-
 // ------------------------------
 // 📂 Layout laden
 function loadLayout() {
   const raw = localStorage.getItem("atziriTempleLayout");
   if (!raw) {
-    alert("Kein gespeichertes Layout gefunden");
+    alert("No saved layout found!");
     return;
   }
 
@@ -1792,7 +2728,6 @@ function loadLayout() {
       renderCell(cell);
     }
   }
-
   // 🔁 WICHTIG: Alles neu berechnen
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
@@ -1802,7 +2737,7 @@ function loadLayout() {
   }
 
   recalcAllTiers();
-
+  updateEffectsSidebar();
 }
 
 window.addEventListener("load", () => {
@@ -1814,28 +2749,32 @@ window.addEventListener("load", () => {
 // ------------------------------
 // 📤 Export Layout als Text
 function exportLayoutAsLink() {
-  let raw = "";
+    // 1️⃣ Erst das aktuelle Layout speichern
+    saveLayout(); // speichert in localStorage und ruft renderCell etc. auf
 
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize; x++) {
-      const cell = grid[y][x];
-      const roomCode = ROOM_CODE_MAP[cell.room] || "_";
-      const tierCode = tierToCode(cell.tier || "tier1");
-      raw += roomCode + tierCode;
+    // 2️⃣ Layout für URL erzeugen
+    let raw = "";
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const cell = grid[y][x];
+            const roomCode = ROOM_CODE_MAP[cell.room] || "_";
+            const tierCode = tierToCode(cell.tier || "tier1");
+            raw += roomCode + tierCode;
+        }
     }
-  }
 
-  const encoded = btoa(raw);
-  const url = `${location.origin}${location.pathname}#L=${encoded}`;
+    const encoded = btoa(raw);
+    const url = `${location.origin}${location.pathname}#L=${encoded}`;
 
-  // Direkt ins Clipboard kopieren
-  navigator.clipboard.writeText(url).then(() => {
-    alert("Layout-URL copied to Clipboard!");
-  }).catch(err => {
-    console.error("Clipboard couldnt be written:", err);
-    alert("Failed to load into clipboard. URL: " + url);
-  });
+    // 3️⃣ Direkt ins Clipboard kopieren
+    navigator.clipboard.writeText(url).then(() => {
+        alert("URL copied to clipboard!");
+    }).catch(err => {
+        console.error("Clipboard couldn't be written:", err);
+        alert("Clipboard couldn't be written: " + url);
+    });
 }
+
 
 function tierToCode(tier) {
   return tier.replace("tier", "");
@@ -1855,6 +2794,13 @@ window.addEventListener("load", () => {
   }
 });
 
+// -------------------- Info Box Toggle --------------------
+const toggleInfoBtn = document.getElementById("toggle-info-btn");
+const infoBox = document.getElementById("info-box");
+
+toggleInfoBtn.addEventListener("click", () => {
+  infoBox.classList.toggle("expanded");
+});
 
 
 </script>
