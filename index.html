@@ -1357,9 +1357,9 @@ function placeRoom(x, y) {
       cellObj.tier = 'tier1';
       cellObj.manualTier = false;
       renderCell(cellObj);
-      highlightValidCells();
       recalcAllTiers();
       updateGeneratorRanges();
+	  markValidCellsForCurrent();
       updateEffectsSidebar();
       return;
   }
@@ -2881,3 +2881,4 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
