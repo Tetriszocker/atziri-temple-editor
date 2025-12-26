@@ -603,7 +603,7 @@ input:checked + .slider:before {
   <div id="palette-buttons">
     <button id="reset-button">Reset Grid</button>
     <button id="save-button">💾 Save Layout</button>
-    
+    <button id="load-button">📂 Load Layout</button>
     <button id="export-button">📤 Export as URL</button>
 	
 
@@ -635,6 +635,7 @@ const TIER_DISPLAY_NAME = {
   tier6: 'Legion 2',
   tier7: 'Legion 3'
 };
+
 
 function nextTier(tier) {
   const n = parseInt(tier.replace('tier',''));
@@ -975,6 +976,10 @@ const ROOM_CODE_MAP = {
   sealed_vault: "SV",
   Clean: "_"
 };
+
+const ROOM_CODE_MAP_REVERSE = Object.fromEntries(
+  Object.entries(ROOM_CODE_MAP).map(([room, code]) => [code, room])
+);
 
 const CODE_ROOM_MAP = Object.fromEntries(
   Object.entries(ROOM_CODE_MAP).map(([k, v]) => [v, k])
@@ -2480,6 +2485,7 @@ const resetButton = document.getElementById('reset-button').onclick = () => {
 };
 
 const saveButton = document.getElementById("save-button");
+const loadButton = document.getElementById("load-button");
 const exportButton = document.getElementById("export-button");
 
 saveButton.onclick = saveLayout;
@@ -2675,28 +2681,150 @@ function updateGeneratorRanges() {
     }
   }
 }
+
 // ------------------------------
-// 💾 Layout speichern
+// 🔹 Grid initialisieren (leer + Path)
+function initEmptyGrid() {
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      const cell = grid[y][x];
+      cell.room = 'Clean';
+      cell.tier = 'tier1';
+      cell.manualTier = false;
+      renderCell(cell);
+    }
+  }
+
+  // Path auf unterste Reihe, Spalte 5
+  const pathY = gridSize - 1;
+  const pathX = 4;
+  const pathCell = grid[pathY][pathX];
+  pathCell.room = 'path';
+  pathCell.tier = 'tier1';
+  renderCell(pathCell);
+
+  // Berechne Effekte & Tier-Anpassungen
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      updateTier(x, y);
+      updateGuardhouseVariant(x, y);
+    }
+  }
+  recalcAllTiers();
+  updateEffectsSidebar();
+}
+
+// ------------------------------
+// 💾 Layout speichern (Save-Button)
 function saveLayout() {
   const layout = [];
-
   for (let y = 0; y < gridSize; y++) {
     layout[y] = [];
     for (let x = 0; x < gridSize; x++) {
       const cell = grid[y][x];
-      layout[y][x] = {
-        room: cell.room,
-        tier: cell.tier
-      };
+      layout[y][x] = { room: cell.room, tier: cell.tier };
     }
   }
-
   localStorage.setItem("atziriTempleLayout", JSON.stringify(layout));
   alert("Layout saved!");
 }
+
 // ------------------------------
-// 📂 Layout laden
-function loadLayout() {
+// Layout aus URL importieren
+function importLayoutFromCode(code) {
+  try {
+    const decoded = atob(code);
+    let index = 0;
+
+    for (let y = 0; y < gridSize; y++) {
+      for (let x = 0; x < gridSize; x++) {
+        const roomCode = decoded[index] || "_";
+        const tierCode = decoded[index + 1] || "1";
+        index += 2;
+
+        const cell = grid[y][x];
+        cell.room = ROOM_CODE_MAP_REVERSE[roomCode] || "Clean";
+        cell.tier = codeToTier(tierCode);
+        cell.manualTier = (cell.room === 'spymasters_study' || cell.room === 'altar_of_sacrifice');
+
+        renderCell(cell);
+      }
+    }
+
+    // Alles neu berechnen
+    for (let y = 0; y < gridSize; y++) {
+      for (let x = 0; x < gridSize; x++) {
+        updateTier(x, y);
+        updateGuardhouseVariant(x, y);
+      }
+    }
+    recalcAllTiers();
+    updateEffectsSidebar();
+
+  } catch (e) {
+    console.error("Failed to import layout:", e);
+    initEmptyGrid(); // Fallback
+  }
+}
+
+// ------------------------------
+// 📤 Layout exportieren
+function exportLayoutAsLink() {
+  saveLayout(); // speichert den aktuellen Stand
+
+  let raw = "";
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      const cell = grid[y][x];
+      const roomCode = ROOM_CODE_MAP[cell.room] || "_";
+      const tierCode = tierToCode(cell.tier || "tier1");
+      raw += roomCode + tierCode;
+    }
+  }
+
+  const encoded = btoa(raw);
+  const url = `${location.origin}${location.pathname}#L=${encoded}`;
+
+  navigator.clipboard.writeText(url).then(() => {
+    alert("URL copied to clipboard!");
+  }).catch(err => {
+    console.error("Clipboard couldn't be written:", err);
+    alert("Clipboard couldn't be written: " + url);
+  });
+}
+
+function tierToCode(tier) { return tier.replace("tier", ""); }
+function codeToTier(code) { return "tier" + code; }
+
+// ------------------------------
+// Reset Button
+document.getElementById('reset-button').onclick = () => {
+  initEmptyGrid();
+  document.querySelectorAll('.room-palette-item').forEach(item => item.classList.remove('active'));
+};
+
+// ------------------------------
+// Save & Export Buttons
+document.getElementById("save-button").onclick = saveLayout;
+document.getElementById("export-button").onclick = exportLayoutAsLink;
+
+// ------------------------------
+// 🔹 Page Load
+window.addEventListener("load", () => {
+  const hash = location.hash;
+
+  if (hash.startsWith("#L=")) {
+    const code = hash.slice(3);
+    importLayoutFromCode(code); // URL-Layout wird geladen
+  } else {
+    initEmptyGrid(); // Standard: leeres Grid + Path
+  }
+});
+
+
+// ------------------------------
+// 🔹 Load Button (aus LocalStorage)
+document.getElementById("load-button").onclick = () => {
   const raw = localStorage.getItem("atziriTempleLayout");
   if (!raw) {
     alert("No saved layout found!");
@@ -2712,23 +2840,19 @@ function loadLayout() {
 
       if (saved && saved.room) {
         cell.room = saved.room;
-	    cell.tier = saved.tier || 'tier1';
-	    cell.manualTier = (
-		cell.room === 'spymasters_study' ||
-		cell.room === 'altar_of_sacrifice'
-);
-
+        cell.tier = saved.tier || 'tier1';
+        cell.manualTier = (cell.room === 'spymasters_study' || cell.room === 'altar_of_sacrifice');
       } else {
         cell.room = 'Clean';
         cell.tier = 'tier1';
-		cell.manualTier = false;
-
+        cell.manualTier = false;
       }
 
       renderCell(cell);
     }
   }
-  // 🔁 WICHTIG: Alles neu berechnen
+
+  // Alles neu berechnen
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       updateTier(x, y);
@@ -2738,61 +2862,11 @@ function loadLayout() {
 
   recalcAllTiers();
   updateEffectsSidebar();
-}
-
-// window.addEventListener("load", () => {
- // if (localStorage.getItem("atziriTempleLayout")) {
-  //  loadLayout();
- // }
-// });
-
-// ------------------------------
-// 📤 Export Layout als Text
-function exportLayoutAsLink() {
-    // 1️⃣ Erst das aktuelle Layout speichern
-    saveLayout(); // speichert in localStorage und ruft renderCell etc. auf
-
-    // 2️⃣ Layout für URL erzeugen
-    let raw = "";
-    for (let y = 0; y < gridSize; y++) {
-        for (let x = 0; x < gridSize; x++) {
-            const cell = grid[y][x];
-            const roomCode = ROOM_CODE_MAP[cell.room] || "_";
-            const tierCode = tierToCode(cell.tier || "tier1");
-            raw += roomCode + tierCode;
-        }
-    }
-
-    const encoded = btoa(raw);
-    const url = `${location.origin}${location.pathname}#L=${encoded}`;
-
-    // 3️⃣ Direkt ins Clipboard kopieren
-    navigator.clipboard.writeText(url).then(() => {
-        alert("URL copied to clipboard!");
-    }).catch(err => {
-        console.error("Clipboard couldn't be written:", err);
-        alert("Clipboard couldn't be written: " + url);
-    });
-}
+  
+};
 
 
-function tierToCode(tier) {
-  return tier.replace("tier", "");
-}
 
-function codeToTier(code) {
-  return "tier" + code;
-}
-
-// ------------------------------
-// Auto-Import aus URL
-window.addEventListener("load", () => {
-  const hash = location.hash;
-  if (hash.startsWith("#L=")) {
-    const code = hash.slice(3);
-    importLayoutFromCode(code);
-  }
-});
 
 // -------------------- Info Box Toggle --------------------
 const toggleInfoBtn = document.getElementById("toggle-info-btn");
@@ -2807,4 +2881,3 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
-
