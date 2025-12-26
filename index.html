@@ -1732,6 +1732,19 @@ function updateTier(x, y) {
         [x-1, y], [x+1, y], [x, y-1], [x, y+1]
     ];
 
+if (cellObj.room === 'spymasters_study' || cellObj.room === 'altar_of_sacrifice') {
+        if (!cellObj.manualTier) {
+            cellObj.tier = 'tier3';
+        }
+        renderCell(cellObj);
+        return;
+    }
+
+    if (cellObj.manualTier) {
+        renderCell(cellObj);
+        return;
+    }
+	
     // Spezialfälle zuerst
     switch (cellObj.room) {
         case 'spymasters_study':
@@ -2889,3 +2902,4 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
