@@ -256,28 +256,7 @@
   gap: 10px;
 }
 
-#palette-top-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
 
-.palette-btn {
-  padding: 8px 0;
-  background: #2b2b2b;
-  color: #fff;
-  border: 1px solid #555;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, box-shadow 0.15s;
-}
-
-.palette-btn:hover {
-  background: #3a3a3a;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
 
 .room-palette-item.active {
   border: 2px solid #00ff00;   /* leuchtendes Grün */
@@ -371,11 +350,7 @@
   position: relative;
 }
 
-.room-palette-item .tier-buttons {
-  display: flex;
-  gap: 4px;
-  margin-top: 6px; /* Abstand unter dem Namen */
-}
+
 
 
 /* ----------------------------- */
@@ -1091,54 +1066,7 @@ for (const roomId in ROOM_DATA) {
         }
     };
 
-    // 🔹 Tier-Buttons nur für Spymaster & Sacrificial Chamber
-    if (roomId === 'spymasters_study' || roomId === 'altar_of_sacrifice') {
-        const tierContainer = document.createElement('div');
-        tierContainer.classList.add('tier-buttons');
-        tierContainer.style.display = 'flex';
-        tierContainer.style.flexDirection = 'row';
-        tierContainer.style.justifyContent = 'center';
-        tierContainer.style.alignItems = 'center';
-        tierContainer.style.width = '100%';
-        tierContainer.style.marginTop = '6px';
-        tierContainer.style.gap = '6px';
-
-        ['tier1','tier2','tier3'].forEach(tier => {
-            const btn = document.createElement('button');
-            btn.innerText = tier.replace('tier',''); // nur „1“, „2“, „3“
-            btn.style.fontSize = '11px';
-            btn.style.width = '26px';
-            btn.style.height = '26px';
-            btn.style.padding = '0';
-            btn.style.lineHeight = '26px';
-            btn.style.textAlign = 'center';
-            btn.style.cursor = 'pointer';
-
-            btn.onclick = (e) => {
-                e.stopPropagation(); // verhindert Klick auf den Raum selbst
-                if (!selectedCell) return; // keine Zelle ausgewählt
-
-                // Tier nur auf Spymaster oder Sacrificial Chamber anwenden
-                if (selectedCell.room === 'spymasters_study' || selectedCell.room === 'altar_of_sacrifice') {
-                    selectedCell.tier = tier;
-                    selectedCell.manualTier = true; // markiert, dass Tier manuell gesetzt wurde
-                    renderCell(selectedCell);       // Zelle optisch aktualisieren
-                    updateEffectsSidebar();         // Sidebar-Effekte aktualisieren
-                } else {
-                    return; // andere Räume ignorieren
-                }
-
-                // Nach Tier-Änderung Logic-Zellen neu markieren
-                if (placementMode === 'logic') {
-                    markValidCellsForCurrent();
-                }
-            };
-
-            tierContainer.appendChild(btn);
-        });
-
-        el.appendChild(tierContainer);
-    }
+    
 
     // Raum-Element der Palette hinzufügen
     paletteContainer.appendChild(el);
