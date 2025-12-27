@@ -1324,7 +1324,16 @@ function highlightValidCells() {
    }
 
 
-
+function isRoomAlreadyPlaced(roomId) {
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            if (grid[y][x].room === roomId) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 
 // Prüft, ob der aktuell ausgewählte Raum hier platziert werden darf
@@ -1378,7 +1387,7 @@ function isValidPlacement(cellObj) {
 
     // Dynamo (Generator)
     if (current.id === 'dynamo') {
-        const allowedNeighbors = ['path', 'bronzeworks','synthflesh_lab','workshop','thaumaturges_laboratory','altar_of_sacrifice'];
+        const allowedNeighbors = ['path'];
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
@@ -1424,11 +1433,19 @@ function isValidPlacement(cellObj) {
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
-    // Sacrificial Chamber
-    if (current.id === 'altar_of_sacrifice') {
-        const allowedNeighbors = ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
+    // Sacrificial Chamber (nur einmal erlaubt)
+	if (current.id === 'altar_of_sacrifice') {
+
+    // ❌ Wenn bereits eine existiert → Placement verbieten
+    if (isRoomAlreadyPlaced('altar_of_sacrifice')) {
+        return false;
     }
+
+    const allowedNeighbors = ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'];
+
+    return neighbors.some(n => allowedNeighbors.includes(n.room));
+}
+
 	
 	// Sealed Vault
 	if (current.id === 'sealed_vault') {
@@ -2833,6 +2850,7 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
