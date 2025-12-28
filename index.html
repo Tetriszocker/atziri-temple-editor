@@ -1348,6 +1348,13 @@ const ILLEGAL_PLACEMENT_RULES = [
     },
 	{
         type: 'maxNeighborCount',
+        room: 'thaumaturges_laboratory',
+        targetNeighbor: 'crimson_hall',
+        limitedNeighbor: 'thaumaturges_laboratory',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
         room: 'armoury',
         targetNeighbor: 'guardhouse', 
         limitedNeighbor: 'armoury',
@@ -1509,7 +1516,7 @@ if (violatesIllegalPlacementRules(cellObj)) {
 
     // Bronzeworks (Smithy)
     if (current.id === 'bronzeworks') {
-        const allowedNeighbors = ['path','workshop', 'dynamo','armoury'];
+        const allowedNeighbors = ['path','workshop','armoury'];
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
@@ -1527,7 +1534,7 @@ if (violatesIllegalPlacementRules(cellObj)) {
 
     // Synthflesh Lab
     if (current.id === 'synthflesh_lab') {
-        const allowedNeighbors = ['path','surgeons_ward', 'guardhouse','dynamo'];
+        const allowedNeighbors = ['path','surgeons_ward', 'guardhouse'];
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
@@ -1545,13 +1552,13 @@ if (violatesIllegalPlacementRules(cellObj)) {
 
     // Thaumaturges Laboratory
     if (current.id === 'thaumaturges_laboratory') {
-        const allowedNeighbors = ['path','altar_of_sacrifice','dynamo','chamber_of_souls','crimson_hall']; 
+        const allowedNeighbors = ['path','altar_of_sacrifice','chamber_of_souls','crimson_hall']; 
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
     // Golem Works (Workshop)
     if (current.id === 'workshop') {
-        const allowedNeighbors = ['path','dynamo','bronzeworks'];
+        const allowedNeighbors = ['path','bronzeworks'];
         return neighbors.some(n => allowedNeighbors.includes(n.room));
     }
 
