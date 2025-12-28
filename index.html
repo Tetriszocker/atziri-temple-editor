@@ -566,8 +566,9 @@ input:checked + .slider:before {
 	Some good Temple Layouts that MilkyBk_ , I and the community made: 
 	<a href=https://tetriszocker.github.io/atziri-temple-editor/#L=QTFHN1MzRzdBMUc3UzNHN0ExRzdfMUoxXzFBMUczQzJHM0c3UzNfMV8xQzJHM0c3QTJBMVMzRzdMMkEyRzNHN1MzTDJHM0c3QTFUMVMzRzdBMV8xVDFDMkExRzdSM0c3XzFSMlQxTDNHMkc3UzNaM0EyTDJfMVQxUjJDMlMzRzdUM18xVDFfMUwyQTJHM0c3QTJMMl8xUjJQMVIyVDFMMkEy target="_blank" rel="noopener noreferrer"> Temple Layout 1 </a> <Br>
 	<a href=https://tetriszocker.github.io/atziri-temple-editor/#L=QTFHN1MzRzdBMUc3UzNHN0ExRzdHN0ExRzdTM0c3QTFHN0c3UzNTM0EyRzNDMl8xXzFTM1MzRzdHN0wyRzJHM18xSjFHN0c3QTFBMVQxQzJBMV8xXzFBMkExRzdHN1IyRzNHN1MzRzdMMkc3UzNTM18xQTJUMUwyQTJUM1MzRzdHN0EyTDFSMl8xUjNaM0c3QTJMMlQxUjJQMV8xVDFMMkEy target="_blank" rel="noopener noreferrer"> Temple Layout 2 </a> <Br>
-	<a href=https://tetriszocker.github.io/atziri-temple-editor/#L=QTFHN1MzRzdBMUc3UzNHN0EyRzdHN1MzRzdBMkwyVDNaM0wyUzNBMV8xSjFfMUczQTJSM1QxRzdHN18xXzFHMkMyTDFBMkc3QTFTM1QxUjJDMl8xTDJBMlMzRzdHN0wyQTJHM1IyVDFHN0c3UzNBMl8xQTJHN1MzXzFTM0ExRzdMMlQxTDJfMUc3QTFHN0c3QTJMMlQxUjJQMUwxQTJHN1Mz target="_blank" rel="noopener noreferrer"> Temple Layout 3 </a>
+	<a href=https://tetriszocker.github.io/atziri-temple-editor/#L=QTFHN1MzRzdBMUc3UzNHN0EyRzdHN1MzRzdBMkwyVDNaM0wyUzNBMV8xSjFfMUczQTJSM1QxRzdHN18xXzFHMkMyTDFBMkc3QTFTM1QxUjJDMl8xTDJBMlMzRzdHN0wyQTJHM1IyVDFHN0c3UzNBMl8xQTJHN1MzXzFTM0ExRzdMMlQxTDJfMUc3QTFHN0c3QTJMMlQxUjJQMUwxQTJHN1Mz target="_blank" rel="noopener noreferrer"> Temple Layout 3 </a> <Br>
 	<a href=https://www.twitch.tv/milkybk_ target="_blank" rel="noopener noreferrer"> Milkys Stream </a> <Br>
+	
 
     </p>
   </div>
@@ -1332,6 +1333,80 @@ function highlightValidCells() {
             }   }   }
    }
 
+//Illegale Placements Combos//
+const ILLEGAL_PLACEMENT_RULES = [
+    {
+        type: 'unique',
+        room: 'altar_of_sacrifice'
+    },
+    {
+        type: 'maxNeighborCount',
+        room: 'thaumaturges_laboratory',
+        targetNeighbor: 'crimson_hall',
+        limitedNeighbor: 'thaumaturges_laboratory',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'armoury',
+        targetNeighbor: 'guardhouse', 
+        limitedNeighbor: 'armoury',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'armoury',
+        targetNeighbor: 'guardhouse', 
+        limitedNeighbor: 'synthflesh_lab',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'spymasters_study',
+        targetNeighbor: 'guardhouse',
+        limitedNeighbor: 'spymasters_study',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'spymasters_study',
+        targetNeighbor: 'guardhouse',
+        limitedNeighbor: 'commanders_chamber',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'commanders_chamber',
+        targetNeighbor: 'guardhouse',
+        limitedNeighbor: 'spymasters_study',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'chamber_of_souls',
+        targetNeighbor: 'armoury',
+        limitedNeighbor: 'chamber_of_souls',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'synthflesh_lab',
+        targetNeighbor: 'guardhouse',
+        limitedNeighbor: 'synthflesh_lab',
+        max: 1
+    },
+	{
+        type: 'maxNeighborCount',
+        room: 'synthflesh_lab',
+        targetNeighbor: 'guardhouse',
+        limitedNeighbor: 'armoury',
+        max: 1
+    }
+	
+	
+	
+];
+
 
 function isRoomAlreadyPlaced(roomId) {
     for (let y = 0; y < gridSize; y++) {
@@ -1345,10 +1420,54 @@ function isRoomAlreadyPlaced(roomId) {
 }
 
 
+
+function violatesIllegalPlacementRules(cellObj) {
+    const neighbors = getNeighbors(cellObj);
+
+    for (const rule of ILLEGAL_PLACEMENT_RULES) {
+
+        // 🔒 UNIQUE ROOM
+        if (rule.type === 'unique' && rule.room === current.id) {
+            if (isRoomAlreadyPlaced(rule.room)) {
+                return true;
+            }
+        }
+
+        // 🚫 MAX NEIGHBOR COUNT RULE
+        if (
+            rule.type === 'maxNeighborCount' &&
+            rule.room === current.id
+        ) {
+            for (const n of neighbors) {
+                if (n.room === rule.targetNeighbor) {
+
+                    const theirNeighbors = getNeighbors(n);
+
+                    const count = theirNeighbors.filter(
+                        nn => nn.room === rule.limitedNeighbor
+                    ).length;
+
+                    if (count >= rule.max) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+
 // Prüft, ob der aktuell ausgewählte Raum hier platziert werden darf
 function isValidPlacement(cellObj) {
     // ✅ Manuell-Modus: Räume dürfen überall platziert werden
-    if (window.manualMode) return true;
+	if (window.manualMode) return true;
+
+if (violatesIllegalPlacementRules(cellObj)) {
+    return false;
+}
+
 
     const neighbors = getNeighbors(cellObj);
 
@@ -2859,7 +2978,6 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
-
 
 
 
