@@ -35,6 +35,8 @@
   margin-top: 20px;
 }
 
+
+
 /* Grid */
 #grid-container { display: flex; justify-content: center; }
 
@@ -768,9 +770,9 @@ spymasters_study: {
     tooltip: 'Increases Temple Mod effects. Upgrades by assassinating other Spymasters',
 	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconViperSpymaster.webp', 
     variants: {
-      tier1: { effects: ['8% increased effect of Temple Mods ...'] },
-      tier2: { effects: ['15% increased effect of Temple Mods ...'] },
-      tier3: { effects: ['30% increased effect of Temple Mods ...'] }
+      tier1: { effects: ['8% increased effect of Garrisons, Commanders, Armouries, Smithies, and Legion Barracks'] },
+      tier2: { effects: ['15% increased effect of Garrisons, Commanders, Armouries, Smithies, and Legion Barracks'] },
+      tier3: { effects: ['30% increased effect of Garrisons, Commanders, Armouries, Smithies, and Legion Barracks'] }
     },
     upgrades: {},
     upgradeInfoFunction: (cellObj) => "Spymaster upgrades by assassinating other Spymasters. For the editor, place the Spymaster then click on the desired Tier"
@@ -784,9 +786,9 @@ spymasters_study: {
     tooltip: 'Increases exp gain',
 	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconSynthflesh.webp', 
     variants: {
-      tier1: { effects: ['10% inc. exp'] },
-      tier2: { effects: ['20% inc. exp'] },
-      tier3: { effects: ['40% inc. exp'] }
+      tier1: { effects: ['10% increased exp'] },
+      tier2: { effects: ['20% increased exp'] },
+      tier3: { effects: ['40% increased exp'] }
     },
     upgrades: {
 	tier2: { type: 'adjacent', rooms: ['surgeons_ward', 'dynamo'], count: 1 },
@@ -805,7 +807,7 @@ spymasters_study: {
     variants: {
       tier1: { effects: ['10% Unique Monster Effectiveness'] },
       tier2: { effects: ['20% Unique Monster Effectiveness'] },
-      tier3: { effects: ['40% Unique Monster Effectiveness. Gives Limp Mod.'] }
+      tier3: { effects: ['40% Unique Monster Effectiveness'] }
     },
     upgrades: {
 	tier2: { type: 'adjacent', rooms: ['synthflesh_lab'], minTier: 0, count: 1 },
@@ -821,9 +823,9 @@ spymasters_study: {
 	tooltip: 'increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs',
 	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconGolemWorks.webp', 
     variants: {
-      tier1: { effects: ['8% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
-      tier2: { effects: ['15% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
-      tier3: { effects: ['30% increased effect of Temple Mods from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] }
+      tier1: { effects: ['8% increased effect from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
+      tier2: { effects: ['15% increased effect from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] },
+      tier3: { effects: ['30% increased effect from Generators, Synthflesh Labs, Flesh Surgeons, Transcendent Barracks, and Alchemy Labs'] }
     },
     upgrades: {  
 	tier2: { type: 'adjacent', rooms: ['dynamo'], count: 1 },
@@ -841,7 +843,7 @@ spymasters_study: {
     variants: {
       tier1: { effects: ['15% increased item rarity'] },
       tier2: { effects: ['30% increased item rarity'] },
-      tier3: { effects: ['60% increased item rarity. Corrupt Soul Cores'] }
+      tier3: { effects: ['60% increased item rarity'] }
     },
     upgrades: {
 	tier2: { type: 'adjacent', rooms: ['thaumaturges_laboratory'], count: 1 },
@@ -857,9 +859,9 @@ spymasters_study: {
     tooltip: 'Increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers',
 	icon: 'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconThaumaturge.webp' ,
     variants: {
-      tier1: { effects: ['8% increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
-      tier2: { effects: ['15% increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
-      tier3: { effects: ['Area contains an additional Quadrilla Sergeant. 30% increased effect of Temple Mods from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] }
+      tier1: { effects: ['8% increased effect from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
+      tier2: { effects: ['15% increased effect from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] },
+      tier3: { effects: ['30% increased effect from Corruption Chambers, Treasure Vaults, and Sacrificial Chambers'] }
     },
     upgrades: {
 	  tier2: { type: 'adjacent', rooms: ['altar_of_sacrifice'], count: 1 },
@@ -877,7 +879,7 @@ spymasters_study: {
     variants: {
       tier1: { effects: ['Rare Monsters have a 15% chance to have an additional Modifier'] },
       tier2: { effects: ['Rare Monsters have a 30% chance to have an additional Modifier'] },
-      tier3: { effects: ['Area contains an additional Royal Sentinel. Rare Monsters have a 60% chance to have an additional Modifier'] }
+      tier3: { effects: ['Rare Monsters have a 60% chance to have an additional Modifier'] }
     },
     upgrades: {
 	  tier2: { type: 'adjacent', rooms: ['altar_of_sacrifice', 'thaumaturges_laboratory'], count: 1 },
@@ -894,8 +896,8 @@ spymasters_study: {
 	icon:'https://cdn.poe2db.tw/image/Art/Textures/Interface/2D/2DArt/UIImages/InGame/Incursion2/RoomIcons/IconSacrificialChamber.webp',
     variants: {
       tier1: { effects: ['15% increased amount of Rare Chests'] },
-      tier2: { effects: ['15% increased amount of Rare Chests'] },
-      tier3: { effects: ['60% increased amount of Rare Chests. Area contains an additional Unchained Beast'] }
+      tier2: { effects: ['30% increased amount of Rare Chests'] },
+      tier3: { effects: ['60% increased amount of Rare Chests. '] }
     },
     upgrades: {},
 	upgradeInfoFunction: (cellObj) => "Upgrades by sacrificing another room."
@@ -945,6 +947,50 @@ spymasters_study: {
 // Liste gültiger Zellen im Logic Mode
 let validPlacementCells = [];
 
+
+// ==============================
+// Effekt-Gruppierung (SCHRITT 3)
+// ==============================
+
+const EFFECT_GROUPS = {
+  LOOT: [
+    'rarity',
+    'rarity of items dropped',
+	'Monster Effectiveness',
+    'Chests',
+    'Rare Chests'
+  ],
+  MONSTER: [
+    'Monster Packs',
+    'Magic Monsters',
+    'Rare Monsters',
+    'additional Modifier'
+  ]
+};
+  
+  const META_TARGETS = {
+  spymasters_study: [
+    { room: 'guardhouse', tiers: [1,2,3] }, // normale Garrisons
+    { room: 'guardhouse', tiers: [6,7] },    // Legion Barracks
+	{ room: 'commanders_chamber', tiers: [1,2,3] },
+	{ room: 'armoury', tiers: [1,2,3] },
+	{ room: 'bronzeworks', tiers: [1,2,3] }
+    // Transcendent Barracks T4-5 wird weggelassen
+  ],
+  workshop: [
+    { room: 'dynamo', tiers: [1,2,3] },
+    { room: 'synthflesh_lab', tiers: [1,2,3] },
+    { room: 'surgeons_ward', tiers: [1,2,3] },
+	{ room: 'chamber_of_souls', tiers: [1,2,3] },
+	{ room: 'guardhouse', tiers: [4,5] }
+  ],
+  thaumaturges_laboratory: [
+    { room: 'crimson_hall', tiers: [1,2,3] },
+    { room: 'sealed_vault', tiers: [1] },
+    { room: 'altar_of_sacrifice', tiers: [1,2,3] }
+  ]
+
+};
 // ------------------------------
 // Raum ↔ Code Mapping
 const ROOM_CODE_MAP = {
@@ -1311,6 +1357,7 @@ function placeRoom(x, y) {
   if (placementMode === 'logic' && !isValidPlacement(cellObj)) return;
 
   cellObj.room = current.id;
+  cellObj.blockedConnections = [];
   cellObj.tier = 'tier1';
   cellObj.manualTier = false;
 
@@ -1348,14 +1395,7 @@ const ILLEGAL_PLACEMENT_RULES = [
         limitedNeighbor: 'thaumaturges_laboratory',
         max: 1
     },
-	{
-        type: 'maxNeighborCount',
-        room: 'thaumaturges_laboratory',
-        targetNeighbor: 'crimson_hall',
-        limitedNeighbor: 'thaumaturges_laboratory',
-        max: 1
-    },
-	{
+		{
         type: 'maxNeighborCount',
         room: 'armoury',
         targetNeighbor: 'guardhouse', 
@@ -1410,8 +1450,55 @@ const ILLEGAL_PLACEMENT_RULES = [
         targetNeighbor: 'guardhouse',
         limitedNeighbor: 'armoury',
         max: 1
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'guardhouse'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'commanders_chamber'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'armoury'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'bronzeworks'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'spymasters_study'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'synthflesh_lab'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'surgeons_ward'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'chamber_of_souls'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'thaumaturges_laboratory'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'workshop'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'crimson_hall'
+    },
+	{
+        type: 'requiresAtLeastOneValidConnection',
+        room: 'altar_of_sacrifice'
     }
-	
 	
 	
 ];
@@ -1430,172 +1517,112 @@ function isRoomAlreadyPlaced(roomId) {
 
 
 
-function violatesIllegalPlacementRules(cellObj) {
+function checkIllegalPlacementRules(cellObj) {
     const neighbors = getNeighbors(cellObj);
+    const blockedConnections = [];
 
     for (const rule of ILLEGAL_PLACEMENT_RULES) {
-
-        // 🔒 UNIQUE ROOM
+        // 🔒 Unique bleibt HARD BLOCK
         if (rule.type === 'unique' && rule.room === current.id) {
             if (isRoomAlreadyPlaced(rule.room)) {
-                return true;
+                return { allowed: false, blockedConnections };
             }
         }
 
-        // 🚫 MAX NEIGHBOR COUNT RULE
-        if (
-            rule.type === 'maxNeighborCount' &&
-            rule.room === current.id
-        ) {
+        // 🚫 T - R - T Regel (SOFT)
+        if (rule.type === 'maxNeighborCount' && rule.room === current.id) {
             for (const n of neighbors) {
                 if (n.room === rule.targetNeighbor) {
-
                     const theirNeighbors = getNeighbors(n);
-
                     const count = theirNeighbors.filter(
                         nn => nn.room === rule.limitedNeighbor
                     ).length;
 
                     if (count >= rule.max) {
-                        return true;
+                        blockedConnections.push(n);
                     }
                 }
             }
         }
+
+        // ✅ Mindestens eine mögliche Verbindung nötig (nur Nachbar des Nachbarn)
+        if (rule.type === 'requiresAtLeastOneValidConnection' && rule.room === current.id) {
+    const hasValidNeighbor = neighbors.some(n =>
+        areRoomsAdjacentAllowed(current.id, n.room)
+    );
+
+    if (!hasValidNeighbor) {
+        return { allowed: false, blockedConnections };
+    }
+}
+
     }
 
-    return false;
+    return {
+        allowed: true,
+        blockedConnections
+    };
 }
 
-
-// Prüft, ob der aktuell ausgewählte Raum hier platziert werden darf
 function isValidPlacement(cellObj) {
-    // ✅ Manuell-Modus: Räume dürfen überall platziert werden
-	if (window.manualMode) return true;
-
-if (violatesIllegalPlacementRules(cellObj)) {
-    return false;
-}
-
+    if (window.manualMode) return true; // Manuell-Modus: alles erlaubt
 
     const neighbors = getNeighbors(cellObj);
+    const ruleResult = checkIllegalPlacementRules(cellObj);
+
+    if (!ruleResult.allowed) return false;
+
+    // ❗ Blockierte Verbindungen merken
+    cellObj.blockedConnections = ruleResult.blockedConnections;
 
     // Joker kann überall platziert werden
-    if (current.id === 'joker') {
-        return true;
-    }
+    if (current.id === 'joker') return true;
 
     // Clean kann nur gesetzt werden, wenn kein Nachbar auf diese Zelle angewiesen ist
-    if (current.id === 'Clean') {
-        return canCleanCell(cellObj);
-    }
+    if (current.id === 'Clean') return canCleanCell(cellObj);
 
     // Bereits belegte Zellen ausschließen
     if (cellObj.room && cellObj.room !== 'Clean') return false;
 
-    // Path nur neben bestehendem Path
-    if (current.id === 'path') {
-        return neighbors.some(n => n.room === 'path');
+    // Mapping erlaubter Nachbarn pro Raum
+    const allowedNeighborMap = {
+        'path': ['path'],
+        'guardhouse': ['path', 'commanders_chamber', 'armoury', 'synthflesh_lab', 'spymasters_study'],
+        'commanders_chamber': ['path', 'guardhouse'],
+        'armoury': ['path', 'bronzeworks', 'chamber_of_souls', 'guardhouse'],
+        'bronzeworks': ['path', 'workshop', 'armoury'],
+        'dynamo': ['path'],
+        'spymasters_study': ['path', 'guardhouse'],
+        'synthflesh_lab': ['path', 'surgeons_ward', 'guardhouse'],
+        'surgeons_ward': ['path', 'synthflesh_lab'],
+        'chamber_of_souls': ['path', 'thaumaturges_laboratory', 'armoury'],
+        'thaumaturges_laboratory': ['path', 'altar_of_sacrifice', 'chamber_of_souls', 'crimson_hall'],
+        'workshop': ['path', 'bronzeworks'],
+        'crimson_hall': ['path', 'altar_of_sacrifice', 'thaumaturges_laboratory'],
+        'altar_of_sacrifice': ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'],
+        'sealed_vault': ['path']
+    };
+
+    const allowed = allowedNeighborMap[current.id] || [];
+
+    // Prüfe normale erlaubte Nachbarn (ohne blockierte)
+    const canPlace = neighbors.some(n => allowed.includes(n.room) && !cellObj.blockedConnections.includes(n));
+    if (!canPlace) return false;
+
+    // Prüfe für blockierte Nachbarn, ob sie noch alternative Nachbarn haben
+    if (cellObj.blockedConnections.length) {
+        const secondLevelOk = neighbors.some(n => {
+            if (!allowed.includes(n.room)) return false;
+            if (cellObj.blockedConnections.includes(n)) {
+                const nNeighbors = getNeighbors(n).filter(nn => nn !== cellObj);
+                return nNeighbors.some(nn => allowed.includes(nn.room));
+            }
+            return true;
+        });
+        if (!secondLevelOk) return false;
     }
 
-    // Guardhouse (Garrison)
-    if (current.id === 'guardhouse') {
-        const allowedNeighbors = ['path', 'commanders_chamber', 'armoury', 'synthflesh_lab', 'spymasters_study'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Commander
-    if (current.id === 'commanders_chamber') {
-        const allowedNeighbors = ['path','guardhouse'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Armoury
-    if (current.id === 'armoury') {
-        const allowedNeighbors = ['path','bronzeworks','chamber_of_souls','guardhouse']; 
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Bronzeworks (Smithy)
-    if (current.id === 'bronzeworks') {
-        const allowedNeighbors = ['path','workshop','armoury'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Dynamo (Generator)
-    if (current.id === 'dynamo') {
-        const allowedNeighbors = ['path'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Spymaster
-    if (current.id === 'spymasters_study') {
-        const allowedNeighbors = ['path','guardhouse'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Synthflesh Lab
-    if (current.id === 'synthflesh_lab') {
-        const allowedNeighbors = ['path','surgeons_ward', 'guardhouse'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Flesh Surgeon
-    if (current.id === 'surgeons_ward') {
-        const allowedNeighbors = ['path','synthflesh_lab'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Alchemy Lab
-    if (current.id === 'chamber_of_souls') {
-        const allowedNeighbors = ['path','thaumaturges_laboratory','armoury'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Thaumaturges Laboratory
-    if (current.id === 'thaumaturges_laboratory') {
-        const allowedNeighbors = ['path','altar_of_sacrifice','chamber_of_souls','crimson_hall']; 
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Golem Works (Workshop)
-    if (current.id === 'workshop') {
-        const allowedNeighbors = ['path','bronzeworks'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Corruption Chamber
-    if (current.id === 'crimson_hall') {
-        const allowedNeighbors = ['path','altar_of_sacrifice', 'thaumaturges_laboratory'];
-        return neighbors.some(n => allowedNeighbors.includes(n.room));
-    }
-
-    // Sacrificial Chamber (nur einmal erlaubt)
-	if (current.id === 'altar_of_sacrifice') {
-
-    // ❌ Wenn bereits eine existiert → Placement verbieten
-    if (isRoomAlreadyPlaced('altar_of_sacrifice')) {
-        return false;
-    }
-
-    const allowedNeighbors = ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'];
-
-    return neighbors.some(n => allowedNeighbors.includes(n.room));
-}
-
-	
-	// Sealed Vault
-	if (current.id === 'sealed_vault') {
-    const neighbors = getNeighbors(cellObj);
-    return neighbors.some(n => n.room === 'path');
-}
-
-
-    // Alle anderen Räume: prüfen, ob Upgrade über Nachbarn möglich
-    return neighborsForUpgrade(cellObj);
-	
-	
-	
+    return true;
 }
 
 // Hilfsfunktion: Nachbarn der Zelle abrufen
@@ -2082,11 +2109,10 @@ function updateBridges() {
             const cell = grid[y][x];
             if (!cell.bridges) continue;
 
-            // Reset
+            // Reset aller Bridge-Klassen
             Object.values(cell.bridges).forEach(b => {
-			b.classList.remove("active");
-			});
-
+                b.classList.remove("active", "blocked");
+            });
 
             if (!cell.reachable) continue;
 
@@ -2096,25 +2122,88 @@ function updateBridges() {
                 if (!n.reachable) return;
                 if (!areRoomsConnected(cell, n)) return;
 
-                if (n.x === cell.x && n.y === cell.y - 1) {
-                    cell.bridges.up.classList.add("up", "active");
+                // ❌ Verbindungen blockiert?
+                if (cell.blockedConnections?.includes(n)) {
+                    // Optional: Blockierte Bridges sichtbar machen
+                    if (n.x === cell.x && n.y === cell.y - 1) cell.bridges.up.classList.add("blocked");
+                    if (n.x === cell.x && n.y === cell.y + 1) cell.bridges.down.classList.add("blocked");
+                    if (n.x === cell.x - 1 && n.y === cell.y) cell.bridges.left.classList.add("blocked");
+                    if (n.x === cell.x + 1 && n.y === cell.y) cell.bridges.right.classList.add("blocked");
+                    return; // Keine aktive Verbindung
                 }
-                if (n.x === cell.x && n.y === cell.y + 1) {
-                    cell.bridges.down.classList.add("down", "active");
-                }
-                if (n.x === cell.x - 1 && n.y === cell.y) {
-                    cell.bridges.left.classList.add("left", "active");
-                }
-                if (n.x === cell.x + 1 && n.y === cell.y) {
-                    cell.bridges.right.classList.add("right", "active");
-                }
+
+                // ✅ Aktiv, normale Verbindung
+                if (n.x === cell.x && n.y === cell.y - 1) cell.bridges.up.classList.add("up", "active");
+                if (n.x === cell.x && n.y === cell.y + 1) cell.bridges.down.classList.add("down", "active");
+                if (n.x === cell.x - 1 && n.y === cell.y) cell.bridges.left.classList.add("left", "active");
+                if (n.x === cell.x + 1 && n.y === cell.y) cell.bridges.right.classList.add("right", "active");
             });
         }
     }
 }
 
+// =========================
+// 🔗 Adjacency / Topology
+// =========================
+
+function areRoomsAdjacentAllowed(roomA, roomB) {
+    const allowedNeighborMap = {
+        'path': ['path'],
+        'guardhouse': ['path', 'commanders_chamber', 'armoury', 'synthflesh_lab', 'spymasters_study'],
+        'commanders_chamber': ['path', 'guardhouse'],
+        'armoury': ['path', 'bronzeworks', 'chamber_of_souls', 'guardhouse'],
+        'bronzeworks': ['path', 'workshop', 'armoury'],
+        'dynamo': ['path'],
+        'spymasters_study': ['path', 'guardhouse'],
+        'synthflesh_lab': ['path', 'surgeons_ward', 'guardhouse'],
+        'surgeons_ward': ['path', 'synthflesh_lab'],
+        'chamber_of_souls': ['path', 'thaumaturges_laboratory', 'armoury'],
+        'thaumaturges_laboratory': ['path', 'altar_of_sacrifice', 'chamber_of_souls', 'crimson_hall'],
+        'workshop': ['path', 'bronzeworks'],
+        'crimson_hall': ['path', 'altar_of_sacrifice', 'thaumaturges_laboratory'],
+        'altar_of_sacrifice': ['path', 'dynamo', 'crimson_hall', 'thaumaturges_laboratory'],
+        'sealed_vault': ['path']
+    };
+
+    return (
+        allowedNeighborMap[roomA]?.includes(roomB) ||
+        allowedNeighborMap[roomB]?.includes(roomA)
+    );
+}
 
 function areRoomsConnected(a, b) {
+
+    // 🚫 Spymaster → Guardhouse → Commander blockieren
+    if (
+        (a.room === 'guardhouse' && b.room === 'commanders_chamber') ||
+        (b.room === 'guardhouse' && a.room === 'commanders_chamber')
+    ) {
+        const guardhouse = a.room === 'guardhouse' ? a : b;
+        const neighbors = getNeighbors(guardhouse);
+
+        const hasSpymaster = neighbors.some(n => n.room === 'spymasters_study');
+        if (hasSpymaster) return false;
+    }
+
+    // 🚫 Spymaster → Guardhouse → Spymaster blockieren (nur der ZWEITE!)
+	if (
+    (a.room === 'guardhouse' && b.room === 'spymasters_study') ||
+    (b.room === 'guardhouse' && a.room === 'spymasters_study')
+	) {
+    const guardhouse = a.room === 'guardhouse' ? a : b;
+    const currentSpymaster = a.room === 'spymasters_study' ? a : b;
+
+    const neighbors = getNeighbors(guardhouse);
+
+    const otherSpymasterExists = neighbors.some(n =>
+        n !== currentSpymaster &&
+        n.room === 'spymasters_study'
+    );
+
+    if (otherSpymasterExists) {
+        return false;
+    }
+}
 
     // 1️⃣ Path verbindet immer
     if (a.room === 'path' || b.room === 'path') return true;
@@ -2124,16 +2213,13 @@ function areRoomsConnected(a, b) {
         const dyn = a.room === 'dynamo' ? a : b;
         const other = dyn === a ? b : a;
 
-        // Dynamo ↔ Path
         if (other.room === 'path') return true;
 
-        // Dynamo → Gebäude, die es upgraden kann
         const dynUpgrades = ROOM_DATA['dynamo']?.upgrades || {};
         for (const upg of Object.values(dynUpgrades)) {
             if (upg.rooms?.includes(other.room)) return true;
         }
 
-        // Gebäude → Dynamo (Gebäude braucht Dynamo)
         const otherUpgrades = ROOM_DATA[other.room]?.upgrades || {};
         for (const upg of Object.values(otherUpgrades)) {
             if (upg.rooms?.includes('dynamo')) return true;
@@ -2160,6 +2246,12 @@ function areRoomsConnected(a, b) {
     return false;
 }
 
+//Bridge blocks//
+function shouldConnect(a, b) {
+    if (a.blockedConnections?.includes(b)) return false;
+    if (b.blockedConnections?.includes(a)) return false;
+    return true;
+}
 
 
 
@@ -2467,100 +2559,177 @@ function getGeneratorBonusForCell(targetCell) {
 function updateEffectsSidebar() {
   sidebarContent.innerHTML = "";
 
-  // 1️⃣ Räume nach roomId + tier gruppieren
-  const grouped = {};
+  const effects = {
+    Loot: {},
+    Monster: {}
+  };
 
+  const metaMods = [];
+
+  // ==========================
+  // Sammeln aller Effekte
+  // ==========================
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       const cell = grid[y][x];
-      if (!cell.room || cell.room === 'Clean') continue;
+      if (!cell.room || cell.room === "Clean") continue;
 
       const room = ROOM_DATA[cell.room];
-      const tier = cell.tier;
-      const hasPower = hasRequiredEnergy(cell);
+      const tierData = room.variants[cell.tier];
+      if (!tierData) continue;
 
-      const key = `${cell.room}-${tier}`;
+      const active = hasRequiredEnergy(cell);
 
-      if (!grouped[key]) {
-        grouped[key] = {
-          room: room,
-          tier: tier,
-          cells: [],
-          hasPower: hasPower
-        };
-      }
-      grouped[key].cells.push(cell);
-      if (!hasPower) grouped[key].hasPower = false;
+      tierData.effects.forEach(effectText => {
+        const { value, text } = parseEffect(effectText);
+
+        // --------------------------
+        // META MODS (Temple scaling)
+        // --------------------------
+        if (/increased effect of|increased effect from/i.test(effectText)) {
+          metaMods.push({
+            text: effectText,
+            value,
+            active
+          });
+          return;
+        }
+
+        // --------------------------
+        // Kategorie bestimmen
+        // --------------------------
+        let category = "Monster";
+
+        if (
+          /rarity|Chests|Rare Chests|Effectiveness/i.test(text)
+        ) {
+          category = "Loot";
+        }
+
+        const key = text.toLowerCase();
+
+        if (!effects[category][key]) {
+          effects[category][key] = {
+            text,
+            baseValue: 0,
+            active
+          };
+        }
+
+        if (active) {
+          effects[category][key].baseValue += value;
+        } else {
+          effects[category][key].active = false;
+        }
+      });
     }
   }
 
-  // 2️⃣ Jede Gruppe in der Sidebar darstellen
-  for (const key in grouped) {
-    const group = grouped[key];
-    const room = group.room;
-    const tierData = room.variants[group.tier];
-    if (!tierData) continue;
+  // ==========================
+  // META MODS einrechnen
+  // ==========================
+  let globalMetaMultiplier = 1;
 
-    const count = group.cells.length;
-    const hasPower = group.hasPower;
-
-    const roomBlock = document.createElement("div");
-    roomBlock.style.marginBottom = "12px";
-
-    // Überschrift mit Anzahl und Gesamt-Effekt
-    const title = document.createElement("strong");
-    const displayTier = TIER_DISPLAY_NAME[group.tier] || group.tier;
-
-    let totalEffectText = "";
-    if (tierData.effects.length > 0) {
-      const percentMatch = tierData.effects[0].match(/(\d+)%/);
-      if (percentMatch) {
-        const perRoom = parseInt(percentMatch[1]);
-        const total = perRoom * count;
-        totalEffectText = `${total}% ${tierData.effects[0].replace(/^\d+% /, '')}`;
-      }
+  metaMods.forEach(m => {
+    if (m.active) {
+      globalMetaMultiplier *= 1 + m.value / 100;
     }
+  });
 
-    title.innerText = `${room.name} (${displayTier}) x${count} = ${totalEffectText}`;
-    title.style.color = hasPower ? "#fff" : "#ff5555";
-    roomBlock.appendChild(title);
+  // ==========================
+  // Anzeige: Loot & Monster
+  // ==========================
+  ["Loot", "Monster"].forEach(category => {
+    const header = document.createElement("strong");
+    header.innerText =
+      category === "Loot"
+        ? "Loot"
+        : "Monster Count & Difficulty";
+    header.style.display = "block";
+    header.style.marginTop = "12px";
+    sidebarContent.appendChild(header);
 
-    // Einzelne Effekte auflisten
     const ul = document.createElement("ul");
-    ul.style.margin = "4px 0 0 12px";
+    ul.style.marginLeft = "12px";
 
-    for (let i = 0; i < count; i++) {
-      tierData.effects.forEach(effect => {
+    Object.values(effects[category])
+      .sort((a, b) => b.baseValue - a.baseValue)
+      .forEach(effect => {
         const li = document.createElement("li");
-        li.innerText = effect;
 
-        // ✅ Farbe der Effekte: grün, wenn aktiv, rot, wenn keine Energie
-        li.style.color = hasPower ? "#00ff00" : "#ff5555";
+        const finalValue = Math.round(
+          effect.baseValue * globalMetaMultiplier
+        );
+
+        li.innerText = `+${finalValue}% ${effect.text}`;
+        li.style.color = effect.active ? "#00ff00" : "#ff5555";
 
         ul.appendChild(li);
       });
-    }
 
-    roomBlock.appendChild(ul);
+    sidebarContent.appendChild(ul);
+  });
 
-    // Warnung, wenn keine Energie
-    if (!hasPower) {
-      const warning = document.createElement("div");
-      warning.innerText = "⚠ Needs Dynamo in range to work";
-      warning.style.color = "#ff5555";
-      warning.style.fontSize = "11px";
-      warning.style.marginTop = "4px";
-      warning.style.fontStyle = "italic";
-      roomBlock.appendChild(warning);
-    }
+  // ==========================
+  // Anzeige: META MODS
+  // ==========================
+  if (metaMods.length > 0) {
+    const metaHeader = document.createElement("strong");
+    metaHeader.innerText = "Meta Mods";
+    metaHeader.style.display = "block";
+    metaHeader.style.marginTop = "12px";
+    sidebarContent.appendChild(metaHeader);
 
-    sidebarContent.appendChild(roomBlock);
+    const metaUl = document.createElement("ul");
+    metaUl.style.marginLeft = "12px";
+
+    metaMods.forEach(m => {
+      const li = document.createElement("li");
+      li.innerText = m.text;
+      li.style.color = m.active ? "#aaa" : "#ff5555";
+      metaUl.appendChild(li);
+    });
+
+    sidebarContent.appendChild(metaUl);
   }
 
   if (sidebarContent.innerHTML === "") {
-    sidebarContent.innerHTML = "<em>No room effects yet.</em>";
+    sidebarContent.innerHTML = "<em>No active room effects.</em>";
   }
 }
+
+
+
+function parseEffect(effect) {
+  const percent = effect.match(/(\d+)%\s*(.*)/);
+  return percent
+    ? { value: parseInt(percent[1]), text: percent[2] }
+    : { value: 0, text: effect };
+}
+
+
+function getCategory(effectText) {
+  if (/increased effect of|increased effect from/i.test(effectText)) {
+    return "Meta";
+  }
+
+  if (/Effectiveness/i.test(effectText)) {
+    return "Loot";
+  }
+
+  if (/rarity|Chests|Rare Chests/i.test(effectText)) {
+    return "Loot";
+  }
+
+  if (/Monster Packs|Magic Monsters|Rare Monsters|additional Modifier/i.test(effectText)) {
+    return "Monster";
+  }
+
+  return "Other";
+}
+
+
+
 //reset button
 const resetButton = document.getElementById('reset-button').onclick = () => {
     for (let y = 0; y < gridSize; y++) {
@@ -2987,6 +3156,8 @@ toggleInfoBtn.addEventListener("click", () => {
 
 </body>
 </html>
+
+
 
 
 
