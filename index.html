@@ -2559,11 +2559,7 @@ function getGeneratorBonusForCell(targetCell) {
 function updateEffectsSidebar() {
   sidebarContent.innerHTML = "";
 
-  const effects = {
-    Loot: {},
-    Monster: {}
-  };
-
+  const effects = { Loot: {}, Monster: {} };
   const metaMods = [];
 
   // ==========================
@@ -2588,9 +2584,10 @@ function updateEffectsSidebar() {
         // --------------------------
         if (/increased effect of|increased effect from/i.test(effectText)) {
           metaMods.push({
-            text: effectText,
+            sourceRoom: cell.room,
             value,
-            active
+            active,
+            tiers: cell.tier // merken, falls tier-spezifisch nötig
           });
           return;
         }
@@ -2598,13 +2595,9 @@ function updateEffectsSidebar() {
         // --------------------------
         // Kategorie bestimmen
         // --------------------------
-        let category = "Monster";
-
-        if (
-          /rarity|Chests|Rare Chests|Effectiveness/i.test(text)
-        ) {
-          category = "Loot";
-        }
+        let category = /rarity|Chests|Rare Chests|Effectiveness/i.test(text)
+          ? "Loot"
+          : "Monster";
 
         const key = text.toLowerCase();
 
@@ -2612,8 +2605,11 @@ function updateEffectsSidebar() {
           effects[category][key] = {
             text,
             baseValue: 0,
-            active
+            active,
+            sourceCells: [{ roomId: cell.room, tier: cell.tier }]
           };
+        } else {
+          effects[category][key].sourceCells.push({ roomId: cell.room, tier: cell.tier });
         }
 
         if (active) {
@@ -2626,25 +2622,42 @@ function updateEffectsSidebar() {
   }
 
   // ==========================
-  // META MODS einrechnen
+  // META MODS gezielt anwenden (PoE-konform)
   // ==========================
-  let globalMetaMultiplier = 1;
+  // META_TARGETS muss folgendes Format haben:
+  // { spymasters_study: [ {room:'guardhouse', tiers:[1,2,3]}, {room:'guardhouse', tiers:[6,7]} ], ... }
+  Object.values(effects).forEach(categoryEffects => {
+    Object.values(categoryEffects).forEach(effect => {
+      let totalMeta = 0;
 
-  metaMods.forEach(m => {
-    if (m.active) {
-      globalMetaMultiplier *= 1 + m.value / 100;
-    }
+      metaMods.forEach(meta => {
+        if (!meta.active) return;
+        const targets = META_TARGETS[meta.sourceRoom];
+        if (!targets) return;
+
+        effect.sourceCells.forEach(({ roomId, tier }) => {
+          targets.forEach(target => {
+            if (target.room === roomId && target.tiers.includes(tier)) {
+              totalMeta += meta.value;
+            }
+          });
+        });
+      });
+
+      // PoE-konform: additive auf Basiswert
+      effect.finalValue = Math.round(effect.baseValue * (1 + totalMeta / 100));
+    });
   });
 
   // ==========================
   // Anzeige: Loot & Monster
   // ==========================
-  ["Loot", "Monster"].forEach(category => {
+  [
+    { key: "Loot", title: "Loot" },
+    { key: "Monster", title: "Monster Count & Difficulty" }
+  ].forEach(section => {
     const header = document.createElement("strong");
-    header.innerText =
-      category === "Loot"
-        ? "Loot"
-        : "Monster Count & Difficulty";
+    header.innerText = section.title;
     header.style.display = "block";
     header.style.marginTop = "12px";
     sidebarContent.appendChild(header);
@@ -2652,18 +2665,12 @@ function updateEffectsSidebar() {
     const ul = document.createElement("ul");
     ul.style.marginLeft = "12px";
 
-    Object.values(effects[category])
-      .sort((a, b) => b.baseValue - a.baseValue)
+    Object.values(effects[section.key])
+      .sort((a, b) => b.finalValue - a.finalValue)
       .forEach(effect => {
         const li = document.createElement("li");
-
-        const finalValue = Math.round(
-          effect.baseValue * globalMetaMultiplier
-        );
-
-        li.innerText = `+${finalValue}% ${effect.text}`;
+        li.innerText = `+${effect.finalValue}% ${effect.text}`;
         li.style.color = effect.active ? "#00ff00" : "#ff5555";
-
         ul.appendChild(li);
       });
 
@@ -2685,7 +2692,7 @@ function updateEffectsSidebar() {
 
     metaMods.forEach(m => {
       const li = document.createElement("li");
-      li.innerText = m.text;
+      li.innerText = `+${m.value}% increased effect from ${ROOM_DATA[m.sourceRoom].name}`;
       li.style.color = m.active ? "#aaa" : "#ff5555";
       metaUl.appendChild(li);
     });
